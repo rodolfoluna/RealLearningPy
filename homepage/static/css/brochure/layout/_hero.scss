@@ -1,0 +1,90 @@
+.hero {
+  padding-top: 48px;
+}
+
+.hero-title{
+  font-size: 70px;
+}
+
+.hero-paragraph {
+  color: hsl(263,45%,7%);
+  background: #ddd;
+  width: fit-content;
+  padding: 0 11px;
+}
+
+.hero-illustration {
+  display: none;
+  position: relative;
+  // Fixes weird 3d bug in Safari
+  // https://stackoverflow.com/questions/18146511/bug-in-css3-rotatey-transition-on-safari/18167565#18167565
+  z-index: 1000;
+}
+
+#hero-image {
+  position: absolute;
+  transform-origin: 50% 50%;
+  padding: 70px;
+  width: 45vw;
+  max-width: 380px;
+}
+
+@include media('>medium') {
+  .hero-inner {
+    /* Split hero in two parts */
+    display: flex;
+  }
+
+  .hero-illustration {
+    display: block;
+    width: 340px;
+  }
+}
+
+@include media('<=medium') {
+  .hero-form {
+    margin: 0 auto;
+  }
+
+  .language-ta .hero-title{
+    font-size: 8.7vw;
+  }
+
+  .hero-title {
+    font-size: 18vw;
+  }
+
+}
+
+
+//  BULLETS
+
+.bullet {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.bullets-wrap {
+  &:first-child {
+    margin-top: -12px;
+  }
+
+  &:last-child {
+    margin-bottom: -12px;
+  }
+}
+
+.bullets-inner {
+  padding-left: 25px;
+  max-width: 400px;
+}
+
+.bullet-header {
+  display: flex;
+  align-items: center;
+}
+
+.bullets-inner{
+  padding-top: 32px;
+  padding-bottom: 32px;
+}

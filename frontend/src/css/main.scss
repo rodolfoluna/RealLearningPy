@@ -1,0 +1,509 @@
+.editor-buttons {
+  position: fixed;
+  left: 50vw;
+  top: 1vh;
+}
+
+.full-ide-button {
+  position: fixed;
+  right: 1vw;
+  top: 1vh;
+  color: white;
+}
+
+.ide {
+  &.ide-half {
+    left: 50vw;
+
+    .editor {
+      width: 100%;
+      height: 49%;
+      bottom: 51%;
+    }
+
+    .terminal {
+      height: 49%;
+      width: 100%;
+    }
+  }
+
+  &.ide-full {
+    left: 2vw;
+
+    .editor {
+      height: 100%;
+      width: 49%;
+    }
+
+    .terminal {
+      height: 100%;
+      width: 50.5%;
+      right: 0;
+    }
+  }
+
+  position: fixed;
+  right: 1vw;
+  top: calc(1vh + 50px);
+  bottom: 1vh;
+
+  .editor-and-terminal {
+    height: 100%;
+    width: 100%;
+    position: relative;
+
+    .editor {
+      position: absolute;
+    }
+
+    .terminal {
+      position: absolute;
+      bottom: 0;
+
+      > div[name=react-console-emulator] {
+        height: 100%;
+        min-height: unset !important;
+      }
+    }
+  }
+
+}
+
+.markdown-body {
+
+  code {
+    color: black;
+  }
+
+  pre {
+    position: relative;
+
+    button {
+      position: absolute;
+      right: 0.5em;
+      top: 0.5em;
+    }
+
+    code {
+      color: #f8f8f2;
+    }
+  }
+}
+
+.traceback .markdown-body {
+  color: white;
+  border: 2px solid white;
+  border-radius: 5px;
+  margin: 1em;
+  padding: 1em;
+  white-space: normal;
+  position: relative;
+  overflow: hidden;
+
+  &.truncated {
+    cursor: pointer;
+    max-height: 200px;
+
+    &:before {
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: linear-gradient(transparent 150px, #838383);
+    }
+
+    .click-to-expand {
+      background: #e1e1e1;
+      color: #2d2d2d;
+      border: 2px solid #1a3757;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 20px;
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+  }
+  code, pre {
+    background-color: #565656;
+    color: white;
+  }
+}
+
+.book-container {
+  margin-left: 2vw;
+  width: 46vw;
+
+  .book-text {
+    margin-bottom: 3em;
+    margin-top: calc(1vh + 50px)
+  }
+
+  .navbar {
+    position: fixed;
+    left: 2vw;
+    top: 0;
+    padding-top: 1vh;
+    border-bottom: 1px solid lightgray;
+    width: 46vw;
+    z-index: 5;
+    height: 50px;
+
+    > * {
+      padding-right: 1em;
+      padding-left: 0;
+    }
+}
+
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+}
+
+.output-prediction {
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  transition: all 1s linear;
+  overflow: hidden;
+
+  // Between firefox and chrome, one seems to only use padding,
+  // while the other only uses margin
+  padding-bottom: 6em;
+  margin-bottom: 6em;
+
+  &.show {
+    opacity: 1;
+  }
+
+  &.fading {
+    opacity: 0;
+  }
+
+  .prediction-choice {
+    // Center radio button vertically against multiline text
+    display: flex;
+    align-items: center;
+
+    margin: 5px;
+    padding: 8px 5px 8px 15px;
+    border-radius: 4px;
+    border: 2px #464f52 solid;
+
+    .prediction-label {
+      white-space: pre;
+      display: inline-block;
+      margin-left: 15px;
+    }
+
+    &.prediction-correct {
+      border: 2px #56ff94 solid;
+      background: #004200;
+    }
+
+    &.prediction-wrong {
+      border: 2px #ff0000 solid;
+      background: #660000;
+    }
+
+    &.prediction-selected {
+      border: 2px #0090ff solid;
+      background: #003866;
+    }
+  }
+
+  .submit-prediction {
+    position: fixed;
+    bottom: 2vh;
+    background:rgb(33, 33, 33);;
+    padding: 0.5em 0 0.5em 1em;
+    border: 2px #464f52 solid;
+    border-radius: 4px;
+    width: 40vw;
+
+    button {
+      margin-top: 0.5em;
+
+      &:disabled {
+        opacity: 1;
+        background: #1c58b1;
+        border-color: #1c58b1;
+      }
+    }
+  }
+}
+
+.tracebacks-container {
+  .traceback {
+    .traceback-frame {
+      border: 1px solid grey;
+      border-radius: 8px;
+      padding: 0.5em;
+      margin-top: 3px;
+
+      .traceback-frame-name {
+        font-weight: bold;
+      }
+
+      table {
+        margin-top: 0.25em;
+      }
+
+      .traceback-variables-table {
+        td {
+          border: 1px solid grey;
+          padding: 4px;
+          white-space: pre;
+        }
+
+        td.traceback-variable-name {
+          padding-right: 2em;
+        }
+
+      }
+
+      .traceback-line-content {
+        padding-left: 8px;
+        white-space: pre;
+      }
+
+      .traceback-lineno {
+        background: #2F3129;
+        color: #8F908A;
+        min-width: 32px;
+        padding-right: 11px;
+        text-align: right;
+      }
+
+    }
+
+    .traceback-repeated-frames {
+      margin: 1.5em;
+    }
+  }
+  .traceback-exception {
+    font-size: 120%;
+    color: red;
+    padding: 0.5em;
+  }
+
+  .traceback-tail {
+    margin: 1em;
+  }
+}
+
+// override react-popup
+.custom-popup {
+  > .popup-content {
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+
+    .popup-arrow {
+      display: none;
+    }
+  }
+}
+
+.my-popup-content {
+  background: white;
+  z-index: 2;
+  padding: 1em;
+  border: solid 1px lightgray;
+}
+
+.menu-popup {
+  @extend .my-popup-content;
+  position: fixed;
+  top: 50px;
+  left: 2vw;
+
+  .btn {
+    text-align: left;
+    width: 100%;
+  }
+}
+
+.hint-icon {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 48px;
+  height: 48px;
+}
+
+.hints-popup {
+  user-select: none;
+}
+
+.settings-modal {
+  @extend .my-popup-content;
+
+  label b {
+    position: relative;
+    bottom: 5px;
+    left: 6px;
+    font-size: 1.3em;
+  }
+}
+
+.special-message-modal {
+  @extend .my-popup-content;
+  border: 1em solid grey;
+  border-radius: 1em;
+}
+
+.solution-token-hidden, .solution-token-hidden::selection {
+  background: #555;
+  color: #555;
+}
+
+.markdown-body .parsons-droppable pre {
+  margin-bottom: 2px;
+  padding: 8px;
+  user-select: none;
+}
+
+// Spinner from loading.io
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-ellipsis div {
+  position: absolute;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+// Markdown text transition animation
+
+@keyframes next-step-transition {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  60% {
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes next-step-flash {
+  0% {
+    background-color: lightyellow;
+  }
+  100% {
+    background-color: inherit;
+  }
+}
+
+.firebase-emulator-warning {
+    display: none;
+}
+
+.assistant {
+  margin-top: 1em;
+
+  .card-header {
+    padding: .75rem 3.25rem;
+    background: rgba(0,0,0,0);
+  }
+
+  .card__trigger {
+    font-size: larger;
+    position: relative;
+
+    cursor: pointer;
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1));
+
+    :hover {
+      background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.15));
+    }
+
+    // Font awesome icons
+    svg {
+      width: 2em;
+    }
+
+    &:after {
+      transform: translatey(-3px) rotate(180deg) scalex(1.2);
+      font-family: 'Tahoma', sans-serif;
+      content: '^';
+      position: absolute;
+      left: 20px;
+      top: 12px;
+      display: block;
+      transition: transform 300ms;
+    }
+
+    &.is-open {
+      &:after {
+        transform: translatey(3px) rotate(0deg) scalex(1.2);
+      }
+    }
+  }
+}

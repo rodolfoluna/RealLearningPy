@@ -1,0 +1,572 @@
+{
+    "pages.GettingElementsAtPosition.steps.index_error.program": {
+        "en": [
+            "words[4]"
+        ],
+        "es": [
+            "palabras[4]"
+        ],
+        "es-latam": [
+            "palabras[4]"
+        ],
+        "fr": [
+            "mots[4]"
+        ],
+        "pl": [
+            "words[4]"
+        ],
+        "ta": [
+            "words[4]"
+        ]
+    },
+    "pages.GettingElementsAtPosition.steps.introducing_len_and_range.program": {
+        "en": [
+            "words = ['This', 'is', 'a', 'list']",
+            "indices = [0, 1, 2, 3]",
+            "",
+            "for index in indices:",
+            "    print(index)",
+            "    print(words[index])"
+        ],
+        "es": [
+            "palabras = ['Esto', 'es', 'una', 'lista']",
+            "indices = [0, 1, 2, 3]",
+            "",
+            "for indice in indices:",
+            "    print(indice)",
+            "    print(palabras[indice])"
+        ],
+        "es-latam": [
+            "palabras = ['Esto', 'es', 'una', 'lista']",
+            "indices = [0, 1, 2, 3]",
+            "",
+            "for indice in indices:",
+            "    print(indice)",
+            "    print(palabras[indice])"
+        ],
+        "fr": [
+            "mots = ['Ceci', 'est', 'une', 'liste']",
+            "indices = [0, 1, 2, 3]",
+            "",
+            "for i in indices:",
+            "    print(i)",
+            "    print(mots[i])"
+        ],
+        "pl": [
+            "words = ['This', 'is', 'a', 'list']",
+            "indices = [0, 1, 2, 3]",
+            "",
+            "for index in indices:",
+            "    print(index)",
+            "    print(words[index])"
+        ],
+        "ta": [
+            "words = ['This', 'is', 'a', 'list']",
+            "indices = [0, 1, 2, 3]",
+            "",
+            "for index in indices:",
+            "    print(index)",
+            "    print(words[index])"
+        ]
+    },
+    "pages.GettingElementsAtPosition.steps.introducing_subscripting.program": {
+        "en": [
+            "words = ['This', 'is', 'a', 'list']",
+            "",
+            "print(words[0])",
+            "print(words[1])",
+            "print(words[2])",
+            "print(words[3])"
+        ],
+        "es": [
+            "palabras = ['Esto', 'es', 'una', 'lista']",
+            "",
+            "print(palabras[0])",
+            "print(palabras[1])",
+            "print(palabras[2])",
+            "print(palabras[3])"
+        ],
+        "es-latam": [
+            "palabras = ['Esto', 'es', 'una', 'lista']",
+            "",
+            "print(palabras[0])",
+            "print(palabras[1])",
+            "print(palabras[2])",
+            "print(palabras[3])"
+        ],
+        "fr": [
+            "mots = ['Ceci', 'est', 'une', 'liste']",
+            "",
+            "print(mots[0])",
+            "print(mots[1])",
+            "print(mots[2])",
+            "print(mots[3])"
+        ],
+        "pl": [
+            "words = ['This', 'is', 'a', 'list']",
+            "",
+            "print(words[0])",
+            "print(words[1])",
+            "print(words[2])",
+            "print(words[3])"
+        ],
+        "ta": [
+            "words = ['This', 'is', 'a', 'list']",
+            "",
+            "print(words[0])",
+            "print(words[1])",
+            "print(words[2])",
+            "print(words[3])"
+        ]
+    },
+    "pages.GettingElementsAtPosition.steps.range_len.program": {
+        "en": [
+            "words = ['This', 'is', 'a', 'list']",
+            "indices = range(4)",
+            "",
+            "for index in indices:",
+            "    print(index)",
+            "    print(words[index])"
+        ],
+        "es": [
+            "palabras = ['Esto', 'es', 'una', 'lista']",
+            "",
+            "for indice in range(len(palabras)):",
+            "    print(indice)",
+            "    print(palabras[indice])"
+        ],
+        "es-latam": [
+            "palabras = ['Esto', 'es', 'una', 'lista']",
+            "",
+            "for indice in range(len(palabras)):",
+            "    print(indice)",
+            "    print(palabras[indice])"
+        ],
+        "fr": [
+            "mots = ['Ceci', 'est', 'une', 'liste']",
+            "indices = range(4)",
+            "",
+            "for i in indices:",
+            "    print(i)",
+            "    print(mots[i])"
+        ],
+        "pl": [
+            "words = ['This', 'is', 'a', 'list']",
+            "indices = range(4)",
+            "",
+            "for index in indices:",
+            "    print(index)",
+            "    print(words[index])"
+        ],
+        "ta": [
+            "words = ['This', 'is', 'a', 'list']",
+            "indices = range(4)",
+            "",
+            "for index in indices:",
+            "    print(index)",
+            "    print(words[index])"
+        ]
+    },
+    "pages.GettingElementsAtPosition.steps.using_len_first_time.program": {
+        "en": [
+            "words = ['This', 'is', 'a', 'list']",
+            "print(len(words))"
+        ],
+        "es": [
+            "palabras = ['Esto', 'es', 'una', 'lista']",
+            "print(len(palabras))"
+        ],
+        "es-latam": [
+            "palabras = ['Esto', 'es', 'una', 'lista']",
+            "print(len(palabras))"
+        ],
+        "fr": [
+            "mots = ['Ceci', 'est', 'une', 'liste']",
+            "print(len(mots))"
+        ],
+        "pl": [
+            "words = ['This', 'is', 'a', 'list']",
+            "print(len(words))"
+        ],
+        "ta": [
+            "words = ['This', 'is', 'a', 'list']",
+            "print(len(words))"
+        ]
+    },
+    "pages.Indentation.steps.mismatched_indentations.program": {
+        "en": [
+            "for character in name:",
+            "    print(character)",
+            "  print('---')"
+        ],
+        "es": [
+            "for caracter in nombre:",
+            "    print(caracter)",
+            "  print('---')"
+        ],
+        "es-latam": [
+            "for caracter in nombre:",
+            "    print(caracter)",
+            "  print('---')"
+        ],
+        "fr": [
+            "for caractere in nom:",
+            "    print(caractere)",
+            "  print('---')"
+        ],
+        "pl": [
+            "for character in name:",
+            "    print(character)",
+            "  print('---')"
+        ],
+        "ta": [
+            "for character in name:",
+            "    print(character)",
+            "  print('---')"
+        ]
+    },
+    "pages.Indentation.steps.missing_indentation.program": {
+        "en": [
+            "for character in name:",
+            "print(character)"
+        ],
+        "es": [
+            "for caracter in nombre:",
+            "print(caracter)"
+        ],
+        "es-latam": [
+            "for caracter in nombre:",
+            "print(caracter)"
+        ],
+        "fr": [
+            "for caractere in nom:",
+            "print(caractere)"
+        ],
+        "pl": [
+            "for character in name:",
+            "print(character)"
+        ],
+        "ta": [
+            "for character in name:",
+            "print(character)"
+        ]
+    },
+    "pages.IntroducingLists.steps.first_list.program": {
+        "en": [
+            "words = ['This', 'is', 'a', 'list']",
+            "",
+            "for word in words:",
+            "    print(word)"
+        ],
+        "es": [
+            "palabras = ['Esto', 'es', 'una', 'lista']",
+            "",
+            "for palabra in palabras:",
+            "    print(palabra)"
+        ],
+        "es-latam": [
+            "palabras = ['Esto', 'es', 'una', 'lista']",
+            "",
+            "for palabra in palabras:",
+            "    print(palabra)"
+        ],
+        "fr": [
+            "mots = ['Ceci', 'est', 'une', 'liste']",
+            "",
+            "for mot in mots:",
+            "    print(mot)"
+        ],
+        "pl": [
+            "words = ['This', 'is', 'a', 'list']",
+            "",
+            "for word in words:",
+            "    print(word)"
+        ],
+        "ta": [
+            "words = ['This', 'is', 'a', 'list']",
+            "",
+            "for word in words:",
+            "    print(word)"
+        ]
+    },
+    "pages.IntroducingNestedLists.steps.first_nested_list_example.program": {
+        "en": [
+            "strings = [['hello', 'there'], ['how', 'are', 'you']]",
+            "print(strings[1][0])"
+        ],
+        "es": [
+            "cadenas = [['hola', 'todos'], ['como', 'estas', 'tu']]",
+            "print(cadenas[1][0])"
+        ],
+        "es-latam": [
+            "cadenas = [['hola', 'todos'], ['como', 'estas', 'tu']]",
+            "print(cadenas[1][0])"
+        ],
+        "fr": [
+            "chaines = [['hello', 'there'], ['comment', 'allez', 'vous']]",
+            "print(chaines[1][0])"
+        ],
+        "pl": [
+            "strings = [['hello', 'there'], ['how', 'are', 'you']]",
+            "print(strings[1][0])"
+        ],
+        "ta": [
+            "strings = [['hello', 'there'], ['how', 'are', 'you']]",
+            "print(strings[1][0])"
+        ]
+    },
+    "pages.MultiLineExpressions.steps.invalid_multiline.program": {
+        "br": [
+            "se_amigo = nome == \"Alice\" or",
+            "              name == \"Bob\""
+        ],
+        "en": [
+            "is_friend = name == \"Alice\" or",
+            "            name == \"Bob\""
+        ],
+        "es": [
+            "es_amigo = nombre == \"Alicia\" or",
+            "         nombre == \"Bob\""
+        ],
+        "es-latam": [
+            "es_amigo = nombre == \"Alicia\" or",
+            "         nombre == \"Bob\""
+        ],
+        "fr": [
+            "est_ami = nom == \"Alice\" or",
+            "                 nom == \"Bob\""
+        ],
+        "pl": [
+            "is_friend = name == \"Alice\" or",
+            "            name == \"Bob\""
+        ],
+        "ta": [
+            "is_friend = name == \"Alice\" or",
+            "            name == \"Bob\""
+        ]
+    },
+    "pages.NewlinesAndFormatBoard.steps.invalid_multi_line_string.program": {
+        "br": [
+            "assert_equal(",
+            "    format_borda([",
+            "        ['X', 'O', 'X'],",
+            "        ['', 'O', 'O'],",
+            "        [' ', 'X', ' ']",
+            "     ]),",
+            "     \"XOX",
+            "       OO",
+            "       X \"",
+            ")"
+        ],
+        "en": [
+            "assert_equal(",
+            "    format_board([",
+            "        ['X', 'O', 'X'],",
+            "        [' ', 'O', 'O'],",
+            "        [' ', 'X', ' ']",
+            "    ]),",
+            "    \"XOX",
+            "      OO",
+            "      X \"",
+            ")"
+        ],
+        "es": [
+            "assert_equal(",
+            "    tablero_formateado([",
+            "        ['X', 'O', 'X'],",
+            "        [' ', 'O', 'O'],",
+            "        [' ', 'X', ' ']",
+            "    ]),",
+            "    \"XOX",
+            "      OO",
+            "      X \"",
+            ")"
+        ],
+        "es-latam": [
+            "assert_equal(",
+            "    tablero_formateado([",
+            "        ['X', 'O', 'X'],",
+            "        [' ', 'O', 'O'],",
+            "        [' ', 'X', ' ']",
+            "    ]),",
+            "    \"XOX",
+            "      OO",
+            "      X \"",
+            ")"
+        ],
+        "fr": [
+            "assert_equal(",
+            "    representation([",
+            "        ['X', 'O', 'X'],",
+            "        [' ', 'O', 'O'],",
+            "        [' ', 'X', ' ']",
+            "    ]),",
+            "    \"XOX",
+            "      OO",
+            "      X \"",
+            ")"
+        ],
+        "pl": [
+            "assert_equal(",
+            "    format_board([",
+            "        ['X', 'O', 'X'],",
+            "        [' ', 'O', 'O'],",
+            "        [' ', 'X', ' ']",
+            "    ]),",
+            "    \"XOX",
+            "      OO",
+            "      X \"",
+            ")"
+        ],
+        "ta": [
+            "assert_equal(",
+            "    format_board([",
+            "        ['X', 'O', 'X'],",
+            "        [' ', 'O', 'O'],",
+            "        [' ', 'X', ' ']",
+            "    ]),",
+            "    \"XOX",
+            "      OO",
+            "      X \"",
+            ")"
+        ]
+    },
+    "pages.NewlinesAndFormatBoard.steps.multi_line_strings_triple_quotes.program": {
+        "en": [
+            "string = \"\"\"First line",
+            "Second line\"\"\"",
+            "print(string)"
+        ],
+        "es": [
+            "cadena = \"\"\"Primera l\u00ednea",
+            "Segunda l\u00ednea\"\"\"",
+            "print(cadena)"
+        ],
+        "es-latam": [
+            "cadena = \"\"\"Primera l\u00ednea",
+            "Segunda l\u00ednea\"\"\"",
+            "print(cadena)"
+        ],
+        "fr": [
+            "chaine = \"\"\"Premi\u00e8re ligne",
+            "Deuxi\u00e8me ligne \"\"\"",
+            "print(chaine)"
+        ],
+        "pl": [
+            "string = \"\"\"First line",
+            "Second line\"\"\"",
+            "print(string)"
+        ],
+        "ta": [
+            "string = \"\"\"First line",
+            "Second line\"\"\"",
+            "print(string)"
+        ]
+    },
+    "pages.SingleAndDoubleQuotesInStrings.steps.single_quotes_apostrophe.program": {
+        "br": [
+            "print('Jantar da Alice')"
+        ],
+        "en": [
+            "print('Alice's Diner')"
+        ],
+        "es": [
+            "print('Alice's Diner')"
+        ],
+        "es-latam": [
+            "print('Ese es el perro'e Juan')"
+        ],
+        "fr": [
+            "print('Alice s'en va diner')"
+        ],
+        "pl": [
+            "print('Alice's Diner')"
+        ],
+        "ta": [
+            "print('Alice's Diner')"
+        ]
+    },
+    "pages.StringMethodsUnderstandingMutation.steps.string_count_index.program": {
+        "br": [
+            "aspas = 'alimente o cachorro e o gato'",
+            "print(aspas.contar('o))",
+            "print(aspas.indice('o'))"
+        ],
+        "en": [
+            "string = 'feed the dog and the cat'",
+            "print(string.count('the'))",
+            "print(string.index('the'))"
+        ],
+        "es": [
+            "string = 'dar de comer al perro y al gato'",
+            "print(string.count('al'))",
+            "print(string.index('al'))"
+        ],
+        "es-latam": [
+            "string = 'alimentar al perro y al gato'",
+            "print(string.count('al'))",
+            "print(string.index('al'))"
+        ],
+        "fr": [
+            "chaine = 'fait tes devoirs et apprend tes le\u00e7ons'",
+            "print(chaine.count('tes'))",
+            "print(chaine.index('tes'))"
+        ],
+        "pl": [
+            "string = 'feed the dog and the cat'",
+            "print(string.count('the'))",
+            "print(string.index('the'))"
+        ],
+        "ta": [
+            "string = 'feed the dog and the cat'",
+            "print(string.count('the'))",
+            "print(string.index('the'))"
+        ]
+    },
+    "pages.StringMethodsUnderstandingMutation.steps.string_in_step.program": {
+        "br": [
+            "print('O' in 'alimente o cachorro e o gato')"
+        ],
+        "en": [
+            "print('the' in 'feed the dog and the cat')"
+        ],
+        "es": [
+            "print('al' in 'dar de comer al perro y al gato')"
+        ],
+        "es-latam": [
+            "print('al' in 'alimentar al perro y al gato')"
+        ],
+        "fr": [
+            "print('tes' in 'fait tes devoirs et apprend tes le\u00e7ons')"
+        ],
+        "pl": [
+            "print('the' in 'feed the dog and the cat')"
+        ],
+        "ta": [
+            "print('the' in 'feed the dog and the cat')"
+        ]
+    },
+    "pages.TheEqualityOperator.steps.equality_vs_assignment.program": {
+        "br": [
+            "print(1 + 2 = 3)"
+        ],
+        "en": [
+            "print(1 + 2 = 3)"
+        ],
+        "es": [
+            "print(1 + 2 = 3)"
+        ],
+        "es-latam": [
+            "print(1 + 2 = 3)"
+        ],
+        "fr": [
+            "print(1 + 2 = 3)"
+        ],
+        "pl": [
+            "print(1 + 2 = 3)"
+        ],
+        "ta": [
+            "print(1 + 2 = 3)"
+        ]
+    }
+}
