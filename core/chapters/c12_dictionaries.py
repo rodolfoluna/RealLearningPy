@@ -835,7 +835,9 @@ class CreatingKeyValuePairs(Page):
         @classmethod
         def generate_inputs(cls):
             result = super().generate_inputs()
-            result["quantities"].pop(result["item"], None)  # ensure item is not already in quantities
+            # ensure item is not already in quantities
+            # (the keys are the translated argument names when using a translation)
+            result[t.get_code_bit("quantities")].pop(result[t.get_code_bit("item")], None)
             return result
 
         tests = [

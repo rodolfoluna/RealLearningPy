@@ -1247,27 +1247,27 @@
             "passed": true,
             "result": [
                 {
-                    "text": "\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   1\u001b[0m | frase \u001b[38;5;197m=\u001b[39m \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mHola Mundo\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   3\u001b[0m | incluir \u001b[38;5;197m=\u001b[39m \u001b[38;5;81mFalse\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   4\u001b[0m | nueva_frase \u001b[38;5;197m=\u001b[39m \u001b[38;5;186m'\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;197min\u001b[39m frase:\n\u001b[38;5;242m \u001b[0m...... car = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mH\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   6\u001b[0m |     \u001b[38;5;81mif\u001b[39m incluir:\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   8\u001b[0m |     incluir \u001b[38;5;197m=\u001b[39m \u001b[38;5;81mTrue\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;197min\u001b[39m frase:\n\u001b[38;5;242m \u001b[0m...... car = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mo\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   6\u001b[0m |     \u001b[38;5;81mif\u001b[39m incluir:\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   7\u001b[0m |         nueva_frase \u001b[38;5;197m+\u001b[39m\u001b[38;5;197m=\u001b[39m car\n\u001b[38;5;242m \u001b[0m.............. nueva_frase = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mo\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   8\u001b[0m |     incluir \u001b[38;5;197m=\u001b[39m \u001b[38;5;81mTrue\u001b[39m\n",
+                    "text": "\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   1\u001b[0m | frase \u001b[38;5;204m=\u001b[39m \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mHola Mundo\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   3\u001b[0m | incluir \u001b[38;5;204m=\u001b[39m \u001b[38;5;81mFalse\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   4\u001b[0m | nueva_frase \u001b[38;5;204m=\u001b[39m \u001b[38;5;186m'\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;204min\u001b[39m frase:\n\u001b[38;5;245m \u001b[0m...... car = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mH\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   6\u001b[0m |     \u001b[38;5;81mif\u001b[39m incluir:\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   8\u001b[0m |     incluir \u001b[38;5;204m=\u001b[39m \u001b[38;5;81mTrue\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;204min\u001b[39m frase:\n\u001b[38;5;245m \u001b[0m...... car = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mo\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   6\u001b[0m |     \u001b[38;5;81mif\u001b[39m incluir:\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   7\u001b[0m |         nueva_frase \u001b[38;5;204m+\u001b[39m\u001b[38;5;204m=\u001b[39m car\n\u001b[38;5;245m \u001b[0m.............. nueva_frase = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mo\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   8\u001b[0m |     incluir \u001b[38;5;204m=\u001b[39m \u001b[38;5;81mTrue\u001b[39m\n",
                     "type": "snoop"
                 },
                 {
-                    "text": "\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;197min\u001b[39m frase:\n\u001b[38;5;242m \u001b[0m...... car = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186ml\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   6\u001b[0m |     \u001b[38;5;81mif\u001b[39m incluir:\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   7\u001b[0m |         nueva_frase \u001b[38;5;197m+\u001b[39m\u001b[38;5;197m=\u001b[39m car\n\u001b[38;5;242m \u001b[0m.............. nueva_frase = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mol\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   8\u001b[0m |     incluir \u001b[38;5;197m=\u001b[39m \u001b[38;5;81mTrue\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;197min\u001b[39m frase:\n\u001b[38;5;242m \u001b[0m...... car = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186ma\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   6\u001b[0m |     \u001b[38;5;81mif\u001b[39m incluir:\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   7\u001b[0m |         nueva_frase \u001b[38;5;197m+\u001b[39m\u001b[38;5;197m=\u001b[39m car\n\u001b[38;5;242m \u001b[0m.............. nueva_frase = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mola\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   8\u001b[0m |     incluir \u001b[38;5;197m=\u001b[39m \u001b[38;5;81mTrue\u001b[39m\n",
+                    "text": "\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;204min\u001b[39m frase:\n\u001b[38;5;245m \u001b[0m...... car = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186ml\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   6\u001b[0m |     \u001b[38;5;81mif\u001b[39m incluir:\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   7\u001b[0m |         nueva_frase \u001b[38;5;204m+\u001b[39m\u001b[38;5;204m=\u001b[39m car\n\u001b[38;5;245m \u001b[0m.............. nueva_frase = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mol\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   8\u001b[0m |     incluir \u001b[38;5;204m=\u001b[39m \u001b[38;5;81mTrue\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;204min\u001b[39m frase:\n\u001b[38;5;245m \u001b[0m...... car = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186ma\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   6\u001b[0m |     \u001b[38;5;81mif\u001b[39m incluir:\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   7\u001b[0m |         nueva_frase \u001b[38;5;204m+\u001b[39m\u001b[38;5;204m=\u001b[39m car\n\u001b[38;5;245m \u001b[0m.............. nueva_frase = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mola\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   8\u001b[0m |     incluir \u001b[38;5;204m=\u001b[39m \u001b[38;5;81mTrue\u001b[39m\n",
                     "type": "snoop"
                 },
                 {
-                    "text": "\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;197min\u001b[39m frase:\n\u001b[38;5;242m \u001b[0m...... car = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186m \u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   6\u001b[0m |     \u001b[38;5;81mif\u001b[39m incluir:\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   7\u001b[0m |         nueva_frase \u001b[38;5;197m+\u001b[39m\u001b[38;5;197m=\u001b[39m car\n\u001b[38;5;242m \u001b[0m.............. nueva_frase = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mola \u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   8\u001b[0m |     incluir \u001b[38;5;197m=\u001b[39m \u001b[38;5;81mTrue\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;197min\u001b[39m frase:\n\u001b[38;5;242m \u001b[0m...... car = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mM\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   6\u001b[0m |     \u001b[38;5;81mif\u001b[39m incluir:\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   7\u001b[0m |         nueva_frase \u001b[38;5;197m+\u001b[39m\u001b[38;5;197m=\u001b[39m car\n\u001b[38;5;242m \u001b[0m.............. nueva_frase = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mola M\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   8\u001b[0m |     incluir \u001b[38;5;197m=\u001b[39m \u001b[38;5;81mTrue\u001b[39m\n",
+                    "text": "\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;204min\u001b[39m frase:\n\u001b[38;5;245m \u001b[0m...... car = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186m \u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   6\u001b[0m |     \u001b[38;5;81mif\u001b[39m incluir:\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   7\u001b[0m |         nueva_frase \u001b[38;5;204m+\u001b[39m\u001b[38;5;204m=\u001b[39m car\n\u001b[38;5;245m \u001b[0m.............. nueva_frase = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mola \u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   8\u001b[0m |     incluir \u001b[38;5;204m=\u001b[39m \u001b[38;5;81mTrue\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;204min\u001b[39m frase:\n\u001b[38;5;245m \u001b[0m...... car = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mM\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   6\u001b[0m |     \u001b[38;5;81mif\u001b[39m incluir:\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   7\u001b[0m |         nueva_frase \u001b[38;5;204m+\u001b[39m\u001b[38;5;204m=\u001b[39m car\n\u001b[38;5;245m \u001b[0m.............. nueva_frase = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mola M\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   8\u001b[0m |     incluir \u001b[38;5;204m=\u001b[39m \u001b[38;5;81mTrue\u001b[39m\n",
                     "type": "snoop"
                 },
                 {
-                    "text": "\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;197min\u001b[39m frase:\n\u001b[38;5;242m \u001b[0m...... car = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mu\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   6\u001b[0m |     \u001b[38;5;81mif\u001b[39m incluir:\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   7\u001b[0m |         nueva_frase \u001b[38;5;197m+\u001b[39m\u001b[38;5;197m=\u001b[39m car\n\u001b[38;5;242m \u001b[0m.............. nueva_frase = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mola Mu\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   8\u001b[0m |     incluir \u001b[38;5;197m=\u001b[39m \u001b[38;5;81mTrue\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;197min\u001b[39m frase:\n\u001b[38;5;242m \u001b[0m...... car = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mn\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   6\u001b[0m |     \u001b[38;5;81mif\u001b[39m incluir:\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   7\u001b[0m |         nueva_frase \u001b[38;5;197m+\u001b[39m\u001b[38;5;197m=\u001b[39m car\n\u001b[38;5;242m \u001b[0m.............. nueva_frase = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mola Mun\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   8\u001b[0m |     incluir \u001b[38;5;197m=\u001b[39m \u001b[38;5;81mTrue\u001b[39m\n",
+                    "text": "\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;204min\u001b[39m frase:\n\u001b[38;5;245m \u001b[0m...... car = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mu\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   6\u001b[0m |     \u001b[38;5;81mif\u001b[39m incluir:\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   7\u001b[0m |         nueva_frase \u001b[38;5;204m+\u001b[39m\u001b[38;5;204m=\u001b[39m car\n\u001b[38;5;245m \u001b[0m.............. nueva_frase = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mola Mu\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   8\u001b[0m |     incluir \u001b[38;5;204m=\u001b[39m \u001b[38;5;81mTrue\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;204min\u001b[39m frase:\n\u001b[38;5;245m \u001b[0m...... car = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mn\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   6\u001b[0m |     \u001b[38;5;81mif\u001b[39m incluir:\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   7\u001b[0m |         nueva_frase \u001b[38;5;204m+\u001b[39m\u001b[38;5;204m=\u001b[39m car\n\u001b[38;5;245m \u001b[0m.............. nueva_frase = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mola Mun\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   8\u001b[0m |     incluir \u001b[38;5;204m=\u001b[39m \u001b[38;5;81mTrue\u001b[39m\n",
                     "type": "snoop"
                 },
                 {
-                    "text": "\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;197min\u001b[39m frase:\n\u001b[38;5;242m \u001b[0m...... car = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186md\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   6\u001b[0m |     \u001b[38;5;81mif\u001b[39m incluir:\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   7\u001b[0m |         nueva_frase \u001b[38;5;197m+\u001b[39m\u001b[38;5;197m=\u001b[39m car\n\u001b[38;5;242m \u001b[0m.............. nueva_frase = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mola Mund\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   8\u001b[0m |     incluir \u001b[38;5;197m=\u001b[39m \u001b[38;5;81mTrue\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;197min\u001b[39m frase:\n\u001b[38;5;242m \u001b[0m...... car = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mo\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   6\u001b[0m |     \u001b[38;5;81mif\u001b[39m incluir:\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   7\u001b[0m |         nueva_frase \u001b[38;5;197m+\u001b[39m\u001b[38;5;197m=\u001b[39m car\n\u001b[38;5;242m \u001b[0m.............. nueva_frase = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mola Mundo\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   8\u001b[0m |     incluir \u001b[38;5;197m=\u001b[39m \u001b[38;5;81mTrue\u001b[39m\n",
+                    "text": "\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;204min\u001b[39m frase:\n\u001b[38;5;245m \u001b[0m...... car = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186md\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   6\u001b[0m |     \u001b[38;5;81mif\u001b[39m incluir:\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   7\u001b[0m |         nueva_frase \u001b[38;5;204m+\u001b[39m\u001b[38;5;204m=\u001b[39m car\n\u001b[38;5;245m \u001b[0m.............. nueva_frase = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mola Mund\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   8\u001b[0m |     incluir \u001b[38;5;204m=\u001b[39m \u001b[38;5;81mTrue\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;204min\u001b[39m frase:\n\u001b[38;5;245m \u001b[0m...... car = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mo\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   6\u001b[0m |     \u001b[38;5;81mif\u001b[39m incluir:\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   7\u001b[0m |         nueva_frase \u001b[38;5;204m+\u001b[39m\u001b[38;5;204m=\u001b[39m car\n\u001b[38;5;245m \u001b[0m.............. nueva_frase = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mola Mundo\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   8\u001b[0m |     incluir \u001b[38;5;204m=\u001b[39m \u001b[38;5;81mTrue\u001b[39m\n",
                     "type": "snoop"
                 },
                 {
-                    "text": "\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;197min\u001b[39m frase:\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m  10\u001b[0m | print(nueva_frase)\n",
+                    "text": "\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   5\u001b[0m | \u001b[38;5;81mfor\u001b[39m car \u001b[38;5;204min\u001b[39m frase:\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m  10\u001b[0m | print(nueva_frase)\n",
                     "type": "snoop"
                 },
                 {
@@ -2783,7 +2783,7 @@
                                     ]
                                 }
                             ],
-                            "friendly": "<p>Un <code>TypeError</code> suele producirse al intentar\ncombinar dos tipos de objetos incompatibles,\npor llamar a una funci\u00f3n con el tipo de objeto equivocado,\no por intentar realizar una operaci\u00f3n no permitida en un tipo de objeto determinado.</p>\n<p>Los par\u00e9ntesis <code>()</code> que siguen a <code>f</code> son interpretados\npor Python como una llamada a una funci\u00f3n para <code>f</code>.\nSin embargo, <code>f</code> no es una funci\u00f3n sino un objeto de tipo <code>str</code>.</p>",
+                            "friendly": "<p>Un <code>TypeError</code> suele producirse al intentar\ncombinar dos tipos de objetos incompatibles,\npor llamar a una funci\u00f3n con el tipo de objeto equivocado,\no por intentar realizar una operaci\u00f3n no permitida en un tipo de objeto determinado.</p>\n<p>Debido a los par\u00e9ntesis que lo rodean, <code>` \nes interpretado por Python como una llamada a una funci\u00f3n para</code>f<code>, que es un objeto de tipo</code>str`\nque no puede ser llamado.</p>",
                             "tail": ""
                         }
                     ],
@@ -3808,7 +3808,7 @@
             "passed": true,
             "result": [
                 {
-                    "friendly": "<p>Un <code>SyntaxError</code> ocurre cuando Python no puede entender tu c\u00f3digo.</p>\n<p>I suspect that you were trying to use a quote character inside a string\nthat was enclosed in quotes of the same kind.\nPerhaps you should have escaped the inner quote character:</p>\n<pre><code>print('Alice\\'s Diner')\n            ^^\n</code></pre>",
+                    "friendly": "<p>Un <code>SyntaxError</code> ocurre cuando Python no puede entender tu c\u00f3digo.</p>\n<p>Ha empezado a escribir una cadena con una comilla simple o doble\npero nunca termin\u00f3 la cadena con otra comilla en esa l\u00ednea.</p>",
                     "text": "    print('Alice's Diner')\n                        ^\nSyntaxError: unterminated string literal (detected at line 1)\nen la l\u00ednea 1\n",
                     "type": "syntax_error"
                 }
@@ -4975,27 +4975,11 @@
             "passed": true,
             "result": [
                 {
-                    "text": "\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   1\u001b[0m | \u001b[38;5;81mdef\u001b[39m \u001b[38;5;148mimprimir_varios\u001b[39m(n, cosa):\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   5\u001b[0m | \u001b[38;5;81mdef\u001b[39m \u001b[38;5;148mimprimir_doble\u001b[39m(x):\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   8\u001b[0m | imprimir_doble(\u001b[38;5;186m\"\u001b[39m\u001b[38;5;186mHola\u001b[39m\u001b[38;5;186m\"\u001b[39m)\n\u001b[38;5;242m     \u001b[0m\u001b[36m\u001b[1m>>> Call to imprimir_doble in File \"/my_program.py\", line 5\u001b[0m\n\u001b[38;5;242m     \u001b[0m...... x = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mHola\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m     \u001b[0m\u001b[38;5;242m   5\u001b[0m | \u001b[38;5;81mdef\u001b[39m \u001b[38;5;148mimprimir_doble\u001b[39m(x):\n\u001b[38;5;242m     \u001b[0m\u001b[38;5;242m   6\u001b[0m |     imprimir_varios(\u001b[38;5;141m2\u001b[39m, x)\n\u001b[38;5;242m         \u001b[0m\u001b[36m\u001b[1m>>> Call to imprimir_varios in File \"/my_program.py\", line 1\u001b[0m\n\u001b[38;5;242m         \u001b[0m...... n = \u001b[38;5;141m2\u001b[39m\n\u001b[38;5;242m         \u001b[0m...... cosa = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mHola\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;242m         \u001b[0m\u001b[38;5;242m   1\u001b[0m | \u001b[38;5;81mdef\u001b[39m \u001b[38;5;148mimprimir_varios\u001b[39m(n, cosa):\n",
+                    "text": "\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   1\u001b[0m | \u001b[38;5;81mdef\u001b[39m \u001b[38;5;148mimprimir_varios\u001b[39m(n, cosa):\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   5\u001b[0m | \u001b[38;5;81mdef\u001b[39m \u001b[38;5;148mimprimir_doble\u001b[39m(x):\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   8\u001b[0m | imprimir_doble(\u001b[38;5;186m\"\u001b[39m\u001b[38;5;186mHola\u001b[39m\u001b[38;5;186m\"\u001b[39m)\n\u001b[38;5;245m     \u001b[0m\u001b[36m\u001b[1m>>> Call to imprimir_doble in File \"/my_program.py\", line 5\u001b[0m\n\u001b[38;5;245m     \u001b[0m...... x = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mHola\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m     \u001b[0m\u001b[38;5;245m   5\u001b[0m | \u001b[38;5;81mdef\u001b[39m \u001b[38;5;148mimprimir_doble\u001b[39m(x):\n\u001b[38;5;245m     \u001b[0m\u001b[38;5;245m   6\u001b[0m |     imprimir_varios(\u001b[38;5;141m2\u001b[39m, x)\n\u001b[38;5;245m         \u001b[0m\u001b[36m\u001b[1m>>> Call to imprimir_varios in File \"/my_program.py\", line 1\u001b[0m\n\u001b[38;5;245m         \u001b[0m...... n = \u001b[38;5;141m2\u001b[39m\n\u001b[38;5;245m         \u001b[0m...... cosa = \u001b[38;5;186m'\u001b[39m\u001b[38;5;186mHola\u001b[39m\u001b[38;5;186m'\u001b[39m\n\u001b[38;5;245m         \u001b[0m\u001b[38;5;245m   1\u001b[0m | \u001b[38;5;81mdef\u001b[39m \u001b[38;5;148mimprimir_varios\u001b[39m(n, cosa):\n",
                     "type": "snoop"
                 },
                 {
-                    "text": "\u001b[38;5;242m         \u001b[0m\u001b[38;5;242m   2\u001b[0m |     \u001b[38;5;81mfor\u001b[39m _ \u001b[38;5;197min\u001b[39m range(n):\n\u001b[38;5;242m         \u001b[0m.......... _ = \u001b[38;5;141m0\u001b[39m\n\u001b[38;5;242m         \u001b[0m\u001b[38;5;242m   3\u001b[0m |         print(cosa)\n",
-                    "type": "snoop"
-                },
-                {
-                    "text": "Hola",
-                    "type": "stdout"
-                },
-                {
-                    "text": "\n",
-                    "type": "stdout"
-                },
-                {
-                    "text": "\u001b[38;5;242m         \u001b[0m\u001b[38;5;242m   2\u001b[0m |     \u001b[38;5;81mfor\u001b[39m _ \u001b[38;5;197min\u001b[39m range(n):\n",
-                    "type": "snoop"
-                },
-                {
-                    "text": "\u001b[38;5;242m         \u001b[0m.......... _ = \u001b[38;5;141m1\u001b[39m\n\u001b[38;5;242m         \u001b[0m\u001b[38;5;242m   3\u001b[0m |         print(cosa)\n",
+                    "text": "\u001b[38;5;245m         \u001b[0m\u001b[38;5;245m   2\u001b[0m |     \u001b[38;5;81mfor\u001b[39m _ \u001b[38;5;204min\u001b[39m range(n):\n\u001b[38;5;245m         \u001b[0m.......... _ = \u001b[38;5;141m0\u001b[39m\n\u001b[38;5;245m         \u001b[0m\u001b[38;5;245m   3\u001b[0m |         print(cosa)\n",
                     "type": "snoop"
                 },
                 {
@@ -5007,11 +4991,27 @@
                     "type": "stdout"
                 },
                 {
-                    "text": "\u001b[38;5;242m         \u001b[0m\u001b[38;5;242m   2\u001b[0m |     \u001b[38;5;81mfor\u001b[39m _ \u001b[38;5;197min\u001b[39m range(n):\n",
+                    "text": "\u001b[38;5;245m         \u001b[0m\u001b[38;5;245m   2\u001b[0m |     \u001b[38;5;81mfor\u001b[39m _ \u001b[38;5;204min\u001b[39m range(n):\n",
                     "type": "snoop"
                 },
                 {
-                    "text": "\u001b[38;5;242m         \u001b[0m\u001b[32m\u001b[1m<<< Return value from imprimir_varios: \u001b[0m\u001b[38;5;81mNone\u001b[39m\n\u001b[38;5;242m     \u001b[0m\u001b[38;5;242m   6\u001b[0m |     imprimir_varios(\u001b[38;5;141m2\u001b[39m, x)\n\u001b[38;5;242m     \u001b[0m\u001b[32m\u001b[1m<<< Return value from imprimir_doble: \u001b[0m\u001b[38;5;81mNone\u001b[39m\n\u001b[38;5;242m \u001b[0m\u001b[38;5;242m   8\u001b[0m | imprimir_doble(\u001b[38;5;186m\"\u001b[39m\u001b[38;5;186mHola\u001b[39m\u001b[38;5;186m\"\u001b[39m)\n",
+                    "text": "\u001b[38;5;245m         \u001b[0m.......... _ = \u001b[38;5;141m1\u001b[39m\n\u001b[38;5;245m         \u001b[0m\u001b[38;5;245m   3\u001b[0m |         print(cosa)\n",
+                    "type": "snoop"
+                },
+                {
+                    "text": "Hola",
+                    "type": "stdout"
+                },
+                {
+                    "text": "\n",
+                    "type": "stdout"
+                },
+                {
+                    "text": "\u001b[38;5;245m         \u001b[0m\u001b[38;5;245m   2\u001b[0m |     \u001b[38;5;81mfor\u001b[39m _ \u001b[38;5;204min\u001b[39m range(n):\n",
+                    "type": "snoop"
+                },
+                {
+                    "text": "\u001b[38;5;245m         \u001b[0m\u001b[32m\u001b[1m<<< Return value from imprimir_varios: \u001b[0m\u001b[38;5;81mNone\u001b[39m\n\u001b[38;5;245m     \u001b[0m\u001b[38;5;245m   6\u001b[0m |     imprimir_varios(\u001b[38;5;141m2\u001b[39m, x)\n\u001b[38;5;245m     \u001b[0m\u001b[32m\u001b[1m<<< Return value from imprimir_doble: \u001b[0m\u001b[38;5;81mNone\u001b[39m\n\u001b[38;5;245m \u001b[0m\u001b[38;5;245m   8\u001b[0m | imprimir_doble(\u001b[38;5;186m\"\u001b[39m\u001b[38;5;186mHola\u001b[39m\u001b[38;5;186m\"\u001b[39m)\n",
                     "type": "snoop"
                 }
             ]
@@ -7225,5 +7225,371 @@
             ]
         },
         "step": "nested_dictionaries"
+    },
+    {
+        "get_solution": "program",
+        "page": "Crear pares clave-valor",
+        "program": [
+            "carro = []",
+            "carro.append('perro')",
+            "carro.append('caja')",
+            "print(carro)"
+        ],
+        "response": {
+            "passed": true,
+            "prediction": {
+                "answer": "['perro', 'caja']",
+                "choices": [
+                    "[]",
+                    "['perro']",
+                    "['caja']",
+                    "['perro', 'caja']",
+                    "['caja', 'perro']",
+                    "['perro', 'perro']",
+                    "['caja', 'caja']",
+                    "Error"
+                ]
+            },
+            "result": [
+                {
+                    "text": "['perro', 'caja']\n",
+                    "type": "stdout"
+                }
+            ]
+        },
+        "step": "list_append_reminder"
+    },
+    {
+        "get_solution": "program",
+        "page": "Crear pares clave-valor",
+        "program": [
+            "carro = ['perro', 'gato']",
+            "carro[1] = 'caja'",
+            "print(carro)"
+        ],
+        "response": {
+            "passed": true,
+            "prediction": {
+                "answer": "['perro', 'caja']",
+                "choices": [
+                    "['caja']",
+                    "['perro', 'gato']",
+                    "['caja', 'perro']",
+                    "['caja', 'gato']",
+                    "['perro', 'caja']",
+                    "['gato', 'caja']",
+                    "['caja', 'perro', 'gato']",
+                    "['perro', 'caja', 'gato']",
+                    "['perro', 'gato', 'caja']",
+                    "Error"
+                ]
+            },
+            "result": [
+                {
+                    "text": "['perro', 'caja']\n",
+                    "type": "stdout"
+                }
+            ]
+        },
+        "step": "list_assign_reminder"
+    },
+    {
+        "get_solution": "program",
+        "page": "Crear pares clave-valor",
+        "program": [
+            "carro = []",
+            "carro[0] = 'perro'",
+            "carro[1] = 'caja'",
+            "print(carro)"
+        ],
+        "response": {
+            "passed": true,
+            "prediction": {
+                "answer": "Error",
+                "choices": [
+                    "[]",
+                    "['perro']",
+                    "['caja']",
+                    "['perro', 'caja']",
+                    "['caja', 'perro']",
+                    "['perro', 'perro']",
+                    "['caja', 'caja']",
+                    "Error"
+                ]
+            },
+            "result": [
+                {
+                    "data": [
+                        {
+                            "didyoumean": [],
+                            "exception": {
+                                "message": "list assignment index out of range",
+                                "type": "IndexError"
+                            },
+                            "frames": [
+                                {
+                                    "filename": "/my_program.py",
+                                    "lineno": 2,
+                                    "lines": [
+                                        {
+                                            "is_current": true,
+                                            "lineno": 2,
+                                            "text": "<span class=\"n n-ExecutingNode\">carro</span><span class=\"p p-ExecutingNode\">[</span><span class=\"mi mi-ExecutingNode\">0</span><span class=\"p p-ExecutingNode\">]</span> <span class=\"o\">=</span> <span class=\"s1\">&#39;perro&#39;</span>",
+                                            "type": "line"
+                                        }
+                                    ],
+                                    "name": "<module>",
+                                    "type": "frame",
+                                    "variables": [
+                                        {
+                                            "name": "<span class=\"n\">carro</span>\n",
+                                            "value": "<span class=\"p\">[]</span>\n"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "friendly": "<p>Un <code>IndexError</code> se produce cuando se intenta obtener un elemento de una lista\nuna tupla, o un objeto similar (secuencia), y utiliza un \u00edndice que\nno existe; normalmente, esto ocurre porque el \u00edndice que se da\nes mayor que la longitud de la secuencia.</p>\n<p>Ha intentado asignar un valor al \u00edndice <code>0</code> de <code>carro</code>,\nuna <code>list</code> que no contiene ning\u00fan elemento.</p>",
+                            "tail": ""
+                        }
+                    ],
+                    "text": [
+                        "Traceback (most recent call last):",
+                        " File \"/my_program.py\", line 2, in <module>",
+                        "       1 | carro = []",
+                        "-->    2 | carro[0] = 'perro'",
+                        "           ^^^^^^^^",
+                        "carro = []",
+                        "",
+                        "IndexError: list assignment index out of range"
+                    ],
+                    "type": "traceback"
+                }
+            ]
+        },
+        "step": "list_assign_invalid"
+    },
+    {
+        "get_solution": "program",
+        "page": "Crear pares clave-valor",
+        "program": [
+            "cantidades = {}",
+            "cantidades['perro'] = 500",
+            "cantidades['caja'] = 2",
+            "print(cantidades)"
+        ],
+        "response": {
+            "passed": true,
+            "prediction": {
+                "answer": "{'perro': 500, 'caja': 2}",
+                "choices": [
+                    "{'perro': 500, 'caja': 2}",
+                    "{'perro': 2, 'caja': 500}",
+                    "{2: 'perro', 500: 'caja'}",
+                    "{500: 'perro', 2: 'caja'}",
+                    "Error"
+                ]
+            },
+            "result": [
+                {
+                    "text": "{'perro': 500, 'caja': 2}\n",
+                    "type": "stdout"
+                }
+            ]
+        },
+        "step": "dict_assignment_valid"
+    },
+    {
+        "get_solution": "program",
+        "page": "Crear pares clave-valor",
+        "program": [
+            "def comprar_cantidad(cantidades, item, cantidad):",
+            "    cantidades[item] = cantidad"
+        ],
+        "response": {
+            "passed": true,
+            "result": []
+        },
+        "step": "buy_quantity_exercise"
+    },
+    {
+        "get_solution": "program",
+        "page": "Crear pares clave-valor",
+        "program": [
+            "def comprar_cantidad(cantidades, item, cantidad):",
+            "    cantidades[item] = cantidad",
+            "",
+            "def prueba():",
+            "    cantidades = {}",
+            "    for _ in range(3):",
+            "        print('\u00bfQu\u00e9 te gustar\u00eda comprar?')",
+            "        item = input()",
+            "",
+            "        print('\u00bfCu\u00e1ntos?')",
+            "        cantidad = int(input())",
+            "",
+            "        comprar_cantidad(cantidades, item, cantidad)",
+            "",
+            "        print(\"OK, esto es lo que llevas en tu carro:\")",
+            "        print(cantidades)",
+            "",
+            "prueba()"
+        ],
+        "response": {
+            "passed": true,
+            "result": [
+                {
+                    "text": "\u00bfQu\u00e9 te gustar\u00eda comprar?\n",
+                    "type": "stdout"
+                },
+                {
+                    "text": "",
+                    "type": "input_prompt"
+                },
+                {
+                    "text": "<input: apple>\n",
+                    "type": "stdout"
+                },
+                {
+                    "text": "\u00bfCu\u00e1ntos?\n",
+                    "type": "stdout"
+                },
+                {
+                    "text": "",
+                    "type": "input_prompt"
+                },
+                {
+                    "text": "<input: 3>\n",
+                    "type": "stdout"
+                },
+                {
+                    "text": "OK, esto es lo que llevas en tu carro:\n{'apple': 3}\n\u00bfQu\u00e9 te gustar\u00eda comprar?\n",
+                    "type": "stdout"
+                },
+                {
+                    "text": "",
+                    "type": "input_prompt"
+                },
+                {
+                    "text": "<input: banana>\n",
+                    "type": "stdout"
+                },
+                {
+                    "text": "\u00bfCu\u00e1ntos?\n",
+                    "type": "stdout"
+                },
+                {
+                    "text": "",
+                    "type": "input_prompt"
+                },
+                {
+                    "text": "<input: 5>\n",
+                    "type": "stdout"
+                },
+                {
+                    "text": "OK, esto es lo que llevas en tu carro:\n{'apple': 3, 'banana': 5}\n\u00bfQu\u00e9 te gustar\u00eda comprar?\n",
+                    "type": "stdout"
+                },
+                {
+                    "text": "",
+                    "type": "input_prompt"
+                },
+                {
+                    "text": "<input: cat>\n",
+                    "type": "stdout"
+                },
+                {
+                    "text": "\u00bfCu\u00e1ntos?\n",
+                    "type": "stdout"
+                },
+                {
+                    "text": "",
+                    "type": "input_prompt"
+                },
+                {
+                    "text": "<input: 2>\n",
+                    "type": "stdout"
+                },
+                {
+                    "text": "OK, esto es lo que llevas en tu carro:\n{'apple': 3, 'banana': 5, 'cat': 2}\n",
+                    "type": "stdout"
+                }
+            ]
+        },
+        "step": "buy_quantity_input_test"
+    },
+    {
+        "get_solution": "program",
+        "page": "Crear pares clave-valor",
+        "program": [
+            "def coste_total_por_item(cantidades, precios):",
+            "    totales = {}",
+            "    for item in cantidades:",
+            "        totales[item] = cantidades[item] * precios[item]",
+            "    return totales"
+        ],
+        "response": {
+            "passed": true,
+            "result": []
+        },
+        "step": "total_cost_per_item_exercise"
+    },
+    {
+        "get_solution": "program",
+        "page": "Crear pares clave-valor",
+        "program": [
+            "def crear_espanol_a_aleman(espanol_a_frances, frances_a_aleman):",
+            "    espanol_a_aleman = {}",
+            "    for espanol in espanol_a_frances:",
+            "        frances = espanol_a_frances[espanol]",
+            "        alem\u00e1n = frances_a_aleman[frances]",
+            "        espanol_a_aleman[espanol] = alem\u00e1n",
+            "    return espanol_a_aleman"
+        ],
+        "response": {
+            "passed": true,
+            "result": []
+        },
+        "step": "make_english_to_german_exercise"
+    },
+    {
+        "get_solution": "program",
+        "page": "Crear pares clave-valor",
+        "program": [
+            "def intercambiar_claves_valores(d):",
+            "    nuevo_dict = {}",
+            "    for clave in d:",
+            "        valor = d[clave]",
+            "        nuevo_dict[valor] = clave",
+            "    return nuevo_dict"
+        ],
+        "response": {
+            "passed": true,
+            "result": []
+        },
+        "step": "swap_keys_values_exercise"
+    },
+    {
+        "get_solution": "program",
+        "page": "Crear pares clave-valor",
+        "program": [
+            "def intercambiar_claves_valores(d):",
+            "    nuevo_dict = {}",
+            "    for clave in d:",
+            "        nuevo_dict[d[clave]] = clave",
+            "    return nuevo_dict",
+            "",
+            "print(intercambiar_claves_valores({'manzana': 'pomme', 'aguacate': 'avocat', 'abogado': 'avocat'}))",
+            "print(intercambiar_claves_valores({'manzana': 'pomme', 'abogado': 'avocat', 'aguacate': 'avocat'}))"
+        ],
+        "response": {
+            "passed": true,
+            "result": [
+                {
+                    "text": "{'pomme': 'manzana', 'avocat': 'abogado'}\n{'pomme': 'manzana', 'avocat': 'aguacate'}\n",
+                    "type": "stdout"
+                }
+            ]
+        },
+        "step": "avocado_or_lawyer"
     }
 ]
