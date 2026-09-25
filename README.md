@@ -1,163 +1,119 @@
-<p align="center">
-      <a href="https://github.com/alexmojaki/futurecoder/blob/main/LICENSE.txt"><img src="https://img.shields.io/github/license/alexmojaki/futurecoder?style=flat" alt="MIT license" align="left"></a>
-      <a href="https://github.com/alexmojaki/futurecoder/actions"><img src="https://github.com/alexmojaki/futurecoder/workflows/CI/badge.svg" alt="Tests status" align="left"></a>
-      <img src="homepage/static/logo/bordered2.png" width="300px" height="300px" alt="logo">
-      <a href="https://saucelabs.com"><img src="https://opensource.saucelabs.com/images/opensauce/powered-by-saucelabs-badge-gray.png?sanitize=true" alt="Testing Powered By SauceLabs" align="right"></a>
-</p>
+# RealLearningPy
 
-<h1 align="center"><code>futurecoder</code></h1>
+Curso interactivo de **Python en español** para principiantes, que funciona **sin conexión a internet**
+en computadoras, tabletas y celulares. Está basado en [futurecoder](https://github.com/alexmojaki/futurecoder)
+(licencia MIT), adaptado para usarse en escuelas con mala o nula conectividad.
 
-This is a 100% free and interactive course for people to teach themselves programming in Python, especially complete beginners at programming.
-It is carefully designed to reduce frustration and guide the user while still ensuring that they learn how to solve problems.
-The goal is for as many people as possible to learn programming.
+## ¿Qué cambia respecto a futurecoder?
 
-You can try it out here: https://futurecoder.io/
+- **Todo en español**: temas, ejercicios, pistas e interfaz. El código Python (palabras clave como
+  `print`, `for`, `def`, `if`) se mantiene igual; sólo se traducen los nombres de variables y los textos.
+- **100% local**: sin cuentas, sin inicio de sesión, sin servidor ni base de datos. Python se ejecuta
+  dentro del navegador (Pyodide) con archivos incluidos en la propia app.
+- **PWA instalable**: después de abrirla una vez, queda guardada en el dispositivo y funciona sin internet.
+- **Responsive**: en celulares y tabletas en vertical se alterna entre las pestañas *Lección* y *Código*.
+- **Perfil del alumno**: la primera vez, el alumno escribe su **número de control**, su **nombre** y una
+  **contraseña**. El avance se guarda automáticamente en el dispositivo.
+- **Archivo de avance cifrado (`.rlpy`)**: desde el botón *Mi avance* el alumno lo descarga (o lo comparte
+  por WhatsApp, correo, etc. en el celular) para entregarlo al profesor o continuar en otro dispositivo.
+  - Sólo lo pueden abrir **el propio alumno** (con su contraseña) y **el profesor** (con su clave privada).
+  - Un alumno no puede abrir el archivo de otro alumno.
+  - Si el archivo se modifica, deja de poder abrirse.
+- **Panel del profesor**: abre los archivos de todos los alumnos a la vez, muestra el avance por alumno y por
+  lección (con fechas), descarga un reporte **CSV para Excel** y permite **restablecer la contraseña** de un alumno.
+- Se quitó el "modo desarrollador" para que los alumnos no puedan saltarse pasos.
 
-**Please consider [contributing](how_to_contribute.md) or [donating](https://opencollective.com/futurecoder)!**
+## Guía para el profesor
 
-Alternatively, [come have a chat on discord](https://discord.gg/KwWvQCPBjW).
+### 1. Crear tus claves (una sola vez)
 
-## Features
+1. Abre la app y en la pantalla inicial elige **Soy profesor** (o *Menú → Panel del profesor*).
+2. En **Generar claves del profesor** escribe una contraseña (mínimo 8 caracteres) y pulsa *Generar claves*.
+3. Se descarga `clave_privada_profesor.json`. **Guárdalo en un lugar seguro con su contraseña y no lo compartas.**
+   Si lo pierdes no podrás abrir los archivos creados para esa clave.
+4. Copia la **clave pública** que aparece en pantalla y configúrala en la app (paso 2).
 
-For a fuller demonstration and explanation, [watch this video](https://www.youtube.com/watch?v=un1BrrV57PA&feature=youtu.be).
+### 2. Configurar la clave pública en la app
 
-<table>
-  <tr>
-    <td colspan="2">
-The course is a fully interactive 'book' which requires the user to run code in the provided editor or shell to
-advance:
-    </td>
-  </tr>
-    <tr>
-    <td colspan="2">
+Elige una opción y vuelve a publicar la app:
 
-![full](images/full.png)
-    </td>
-  </tr>
-  <tr>
-    <td>
-This requires a mixture of solving problems or simply typing and running provided code. In the latter case, the
-user is often kept engaged by being asked to predict the output in a simple multiple choice question:
-    </td>
-    <td>
-The code at each step is checked automatically. If
-needed, the student can get small hints to gradually guide them to the solution:
-    </td>
-  </tr>
-  <tr>
-    <td>
+- **GitHub Pages (recomendado)**: en el repositorio ve a *Settings → Secrets and variables → Actions →
+  Variables* y crea la variable `CLAVE_PUBLICA_PROFESOR` con el valor de la clave pública.
+- O edita `frontend/src/config/profesor.json` y pega la clave en el campo `clavePublica`.
+- O compila con la variable de entorno `REACT_APP_CLAVE_PUBLICA_PROFESOR`.
 
-![predict_output](images/predict_output.png)
-    </td>
-    <td>
+Haz esto **antes** de que los alumnos empiecen: los archivos creados sin clave de profesor sólo los puede abrir
+el alumno (basta con que el alumno vuelva a descargar su archivo cuando la clave ya esté configurada).
+En el panel verás la **huella** de la clave configurada (p. ej. `8742-339D-94E7`) para comprobar que coincide.
 
-![hints](images/hints.png)
-    </td>
-  </tr>
-  <tr>
-    <td>
-If they're still really stuck, they can reveal the solution bit by bit:
-</td>
-<td>
+### 3. Revisar el avance de los alumnos
 
-Or in some cases solve a *Parsons problem* instead, where they have to put a shuffled solution in the correct
-order:
-</td>
-  </tr>
-  <tr>
-    <td>
+1. *Panel del profesor → Abrir mi clave de profesor*: elige `clave_privada_profesor.json` y escribe su contraseña.
+2. Elige (o arrastra) los archivos `.rlpy` de los alumnos. Puedes abrir muchos a la vez; si hay varios del mismo
+   alumno se muestra el más reciente.
+3. *Ver detalle* muestra el avance por capítulo y lección, las fechas y el código que tenía en el editor.
+4. *Descargar reporte (CSV/Excel)* genera una hoja con todos los alumnos.
+5. *Restablecer contraseña*: si un alumno olvidó su contraseña, crea una copia de su archivo con una contraseña
+   nueva. El alumno la carga con *Ya tengo mi archivo de avance*.
 
-![solution](images/solution.png)
-</td>
-<td>
+La clave privada sólo se usa en memoria mientras el panel está abierto; nada se envía a ningún servidor.
 
-![parsons](images/parsons.png)
-</td>
-  </tr>
-  <tr>
+## Guía para el alumno
 
-<td>
-Tracebacks are more helpful than usual, with several enhancements:
+- **Primera vez**: *Soy alumno nuevo* → número de control, nombre y contraseña.
+- **Al volver a abrir la app** en el mismo dispositivo: escribe tu contraseña.
+- **Guardar / entregar tu avance**: botón con tu nombre (arriba) → *Descargar mi archivo de avance*
+  (o *Compartir / enviar* en el celular). Un **!** amarillo indica que tienes avance que aún no está en tu archivo.
+- **Continuar en otro dispositivo**: en la pantalla inicial elige *Ya tengo mi archivo de avance*, selecciona tu
+  archivo `.rlpy` y escribe tu contraseña.
+- **Dispositivo compartido**: al terminar, descarga tu archivo y usa *Mi avance → Cambiar de alumno*, que borra tu
+  avance de ese dispositivo.
 
-- Highlighting the exact operation that failed, not just the line, using [executing](https://github.com/alexmojaki/executing)
-- Tables of local variables and simple expressions evaluated by [pure_eval](https://github.com/alexmojaki/pure_eval)
-- Suggestions for fixes provided by [DidYouMean](https://github.com/SylvainDe/DidYouMean-Python)
-- Beginner friendly explanations provided by [friendly-traceback](https://github.com/aroberge/friendly-traceback) (shown when hovering over the little `i` icon)
-- Showing multiline statements in full thanks to [stack_data](https://github.com/alexmojaki/stack_data) without showing unnecessary extra lines
+## Publicar la aplicación
 
-</td>
-<td>
-Common mistakes can be caught and pointed out to the student. This includes specific checks in some steps as well as linting tailored for beginners.
-</td>
-  </tr>
-  <tr>
+### Opción A: GitHub Pages (recomendada)
 
-<td>
+El flujo `.github/workflows/publicar.yml` compila y publica la app automáticamente al actualizar la rama `main`.
 
-![traceback](images/traceback.png)
-</td>
-<td>
+1. En GitHub: *Settings → Pages → Source → GitHub Actions* (una sola vez).
+2. (Opcional) crea la variable `CLAVE_PUBLICA_PROFESOR` (ver arriba).
+3. Haz *push* a `main` o ejecuta el flujo manualmente desde la pestaña *Actions*.
 
-![executing](images/messages.png)
-</td>
-  </tr>
-  <tr>
-    <td>
+La app queda en `https://<usuario>.github.io/<repositorio>/`. Cada alumno necesita internet **sólo la primera
+vez** que la abre (descarga unos 25 MB); después puede instalarla (menú del navegador → *Instalar app* /
+*Agregar a pantalla de inicio*) y usarla sin conexión.
 
-Several debuggers are provided, including [snoop](https://github.com/alexmojaki/snoop)...
-    </td>
-    <td>
+### Opción B: en una computadora, sin internet
 
-[...birdseye...](https://github.com/alexmojaki/birdseye)
-    </td>
-  </tr>
-    <tr>
-    <td>
+```bash
+./scripts/install_deps.sh       # una vez (requiere Python 3.12.1, poetry y Node 22)
+./scripts/build.sh              # genera la carpeta dist/
+python scripts/servir_local.py  # abre http://localhost:8000
+```
 
-![snoop](images/snoop.png)
-    </td>
-    <td>
+La carpeta `dist/` se puede copiar a otra computadora y servir con `python scripts/servir_local.py`
+(sólo se necesita Python). También se puede alojar en cualquier servidor web estático, en cualquier subcarpeta.
 
-![birdseye](images/birdseye.png)
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2">
+> **Importante:** los navegadores sólo permiten instalar la PWA, trabajar sin conexión y usar `input()` en páginas
+> servidas por **HTTPS** o desde **localhost**. Una dirección tipo `http://192.168.x.x` en la red local no sirve para
+> celulares; en ese caso usa GitHub Pages (u otro hosting con HTTPS) para la primera descarga.
 
-...and [Python Tutor](http://pythontutor.com/)
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2">
+## Detalles técnicos
 
-![pythontutor](images/pythontutor.png)
-    </td>
-  </tr>
-</table>
+- Cifrado del archivo de avance (`frontend/src/local/cripto.js`, librerías [@noble](https://paulmillr.com/noble/)
+  en JavaScript puro, funcionan sin conexión):
+  - los datos se cifran con una clave aleatoria usando **XChaCha20-Poly1305**;
+  - esa clave se guarda cifrada con la contraseña del alumno (**scrypt**) y con la clave pública del profesor
+    (**X25519** + HKDF).
+- Perfil y avance del alumno: `frontend/src/local/perfil.js` (IndexedDB en el dispositivo).
+- Pantallas nuevas: `frontend/src/local/Acceso.jsx`, `MiAvance.jsx`, `PanelProfesor.jsx`.
+- La traducción al español de la lección *Crear pares clave-valor*, que faltaba en futurecoder, está en
+  `translations/extra/` y se aplica con `python -m translations.extra.apply_extra_es`.
+- Limitaciones conocidas: al no haber servidor, un alumno con conocimientos técnicos podría inspeccionar o
+  alterar los datos guardados en su propio navegador. El cifrado protege los archivos frente a otros alumnos,
+  pero no es un sistema antitrampas.
 
-## Running locally
+## Créditos y licencia
 
-1. Fork this repo, `git clone` it, and enter the top-level `futurecoder` folder.
-2. Install Python 3.12.1 and [poetry](https://python-poetry.org/docs/#installation).
-3. Run `poetry install` to install Python dependencies.
-4. Run `./scripts/generate.sh`. This will generate various static files from Python used by the frontend and run some tests. Repeat this step whenever you change Python files.
-5. In the `frontend` folder:
-    1. Install `node >= 22.17.0`.
-
-    2. Run `npm ci` to download dependencies.
-
-    3. Run `npm run build` and then copy `service-worker.js` from the `course` folder to the `public` folder. The service worker is used by [sync-message](https://github.com/alexmojaki/sync-message) to handle `time.sleep` and reading from stdin (e.g. `input()`) in Python. If you want to enable caching (not a good idea when developing), set the environment variable `REACT_APP_PRECACHE=1` when building.
-
-    4. Run `npm start` to start the frontend development server.
-6. Go to http://localhost:3000/course/
-
-To learn more about the system, see the [contributing guide](how_to_contribute.md).
-
-## Controls
-
-To explore the course more freely:
-
-1. Click the hamburger menu icon in the top left.
-2. Click Settings.
-3. Turn Developer mode on.
-4. This should give you two red buttons floating at the bottom of the screen. They change the currently active step, so you can move forward without having to complete exercises or backwards to test a step again.
+Basado en [futurecoder](https://futurecoder.io) de Alex Hall y colaboradores, con la traducción al español de su
+comunidad. Licencia MIT (ver `LICENSE.txt`).

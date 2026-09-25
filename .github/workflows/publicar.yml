@@ -1,0 +1,54 @@
+# Compila la app y la publica en GitHub Pages cada vez que se actualiza la rama main.
+# Requisito (una sola vez): en GitHub ve a Settings → Pages → Source y elige "GitHub Actions".
+# Opcional: en Settings → Secrets and variables → Actions → Variables crea la variable
+# CLAVE_PUBLICA_PROFESOR con la clave pública generada en el Panel del profesor.
+name: Publicar en GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  compilar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.1'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.17.0'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Instalar dependencias
+        run: |
+          pip install poetry
+          ./scripts/install_deps.sh
+      - name: Compilar
+        env:
+          REACT_APP_CLAVE_PUBLICA_PROFESOR: ${{ vars.CLAVE_PUBLICA_PROFESOR }}
+        run: ./scripts/build.sh
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  publicar:
+    needs: compilar
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
