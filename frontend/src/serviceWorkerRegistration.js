@@ -1,9 +1,3 @@
-// `npm start` tends to set the path to `/course` without a trailing `/`
-// which stops the service worker from working. Redirect if necessary.
-if (window.location.pathname !== "/course/") {
-  window.location.pathname = "/course/";
-}
-
 // Reference: https://cra.link/PWA
 
 const isLocalhost = Boolean(
@@ -22,7 +16,7 @@ export function register() {
 
   if ('serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
-    const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
+    const publicUrl = new URL(process.env.PUBLIC_URL || ".", window.location.href);
     if (publicUrl.origin !== window.location.origin) {
       // Our service worker won't work if PUBLIC_URL is on a different origin
       // from what our page is served on. This might happen if a CDN is used to
@@ -31,7 +25,8 @@ export function register() {
     }
 
     window.addEventListener('load', () => {
-      const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+      // Ruta relativa: la app puede estar en cualquier carpeta del servidor
+      const swUrl = new URL("service-worker.js", publicUrl.href.replace(/\/?$/, "/")).href;
 
       if (isLocalhost) {
         // This is running on localhost. Let's check if a service worker still exists or not.

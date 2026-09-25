@@ -7,7 +7,7 @@
 import {serviceWorkerFetchListener} from 'sync-message';
 import {clientsClaim, skipWaiting} from 'workbox-core';
 import {ExpirationPlugin} from 'workbox-expiration';
-import {precacheAndRoute} from 'workbox-precaching';
+import {cleanupOutdatedCaches, precacheAndRoute} from 'workbox-precaching';
 import {registerRoute} from 'workbox-routing';
 import {StaleWhileRevalidate} from 'workbox-strategies';
 import {CacheableResponsePlugin} from 'workbox-cacheable-response';
@@ -26,22 +26,16 @@ if (process.env.REACT_APP_PRECACHE) {
   // even if you decide not to use precaching. See https://cra.link/PWA
   precacheAndRoute(self.__WB_MANIFEST);
 
+  cleanupOutdatedCaches();
+
+  // Todo lo demás que venga del mismo servidor (p. ej. archivos que no están en el manifiesto)
+  // también se guarda en caché para poder usarse sin conexión.
   registerRoute(
-    ({url}) => {
-      const urlString = url.toString();
-      return (
-        urlString.startsWith('https://cdn.jsdelivr.net/') || // Pyodide
-        urlString.startsWith('https://pyodide-cdn2.iodide.io') || // Only used when we are testing bleeding-edge pyodide
-        urlString.startsWith('https://futurecoder-io--') || // Firebase preview deployments
-        url.hostname.endsWith('futurecoder.io') ||
-        url.hostname.includes('localhost') ||
-        url.hostname.includes('127.0.0.1')
-      );
-    },
+    ({url}) => url.origin === self.location.origin,
     new StaleWhileRevalidate({
       cacheName: 'everything',
       plugins: [
-        new ExpirationPlugin({maxEntries: 30}),
+        new ExpirationPlugin({maxEntries: 200}),
         new CacheableResponsePlugin(
           {statuses: [0, 200]}
           // ^ Q: What's status 0 mean?

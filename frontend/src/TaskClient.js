@@ -4,7 +4,9 @@ import {makeChannel} from "sync-message";
 import * as Comlink from 'comlink';
 import {PyodideClient} from "pyodide-worker-runner";
 
-const channel = makeChannel({serviceWorker: {scope: "/course/"}});
+// URL absoluta de la carpeta de la app (funciona en cualquier ruta del servidor)
+const appScope = new URL("./", window.location.href).href;
+const channel = makeChannel({serviceWorker: {scope: appScope}});
 
 export const taskClient = new PyodideClient(() => new Worker(), channel);
 

@@ -4,6 +4,7 @@
 
 import * as Comlink from 'comlink';
 import pythonCoreUrl from "./python_core.tar.load_by_url"
+import {loadPyodide} from "pyodide";
 import {
   loadPyodideAndPackage,
   makeRunnerCallback,
@@ -11,8 +12,16 @@ import {
   PyodideFatalErrorReloader
 } from "pyodide-worker-runner";
 
+// Pyodide se sirve junto con la app (copiado por PyodidePlugin en la carpeta pyodide/),
+// así no se necesita conexión a internet para ejecutar Python.
+// El worker está en static/js/, así que la carpeta pyodide/ está dos niveles arriba.
+const pyodideIndexURL = new URL("../../pyodide/", self.location.href).href;
+
 const reloader = new PyodideFatalErrorReloader(async () => {
-  const pyodide = await loadPyodideAndPackage({url: pythonCoreUrl, format: "tar"});
+  const pyodide = await loadPyodideAndPackage(
+    {url: pythonCoreUrl, format: "tar"},
+    () => loadPyodide({indexURL: pyodideIndexURL}),
+  );
   pyodide.pyimport("core.init_pyodide").init(process.env.REACT_APP_LANGUAGE);
   return pyodide;
 });

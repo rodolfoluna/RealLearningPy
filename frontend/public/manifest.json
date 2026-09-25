@@ -1,6 +1,8 @@
 {
-  "short_name": "futurecoder",
-  "name": "futurecoder.io",
+  "short_name": "RealLearningPy",
+  "name": "RealLearningPy - Aprende Python",
+  "description": "Curso interactivo de Python para principiantes que funciona sin conexión a internet",
+  "lang": "es",
   "icons": [
     {
       "src": "favicon.ico",
@@ -10,16 +12,20 @@
     {
       "src": "192x192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any"
     },
     {
       "src": "512x512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any"
     }
   ],
   "start_url": ".",
+  "scope": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "orientation": "any",
+  "theme_color": "#343a40",
   "background_color": "#ffffff"
 }

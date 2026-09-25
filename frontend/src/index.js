@@ -1,4 +1,5 @@
 import React from 'react';
+import "./css/bootstrap-4.4.1.min.css";
 import ReactDOM from 'react-dom';
 import {App} from './App';
 import {Provider} from "react-redux";
