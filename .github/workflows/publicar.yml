@@ -1,4 +1,4 @@
-# Compila la app y la publica en GitHub Pages cada vez que se actualiza la rama main.
+# Compila la app y la publica en GitHub Pages cada vez que se actualiza la rama principal.
 # Requisito (una sola vez): en GitHub ve a Settings → Pages → Source y elige "GitHub Actions".
 # Opcional: en Settings → Secrets and variables → Actions → Variables crea la variable
 # CLAVE_PUBLICA_PROFESOR con la clave pública generada en el Panel del profesor.
@@ -6,7 +6,7 @@ name: Publicar en GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, claude/cool-fermat-vsm21o]
   workflow_dispatch:
 
 permissions:
