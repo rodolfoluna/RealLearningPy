@@ -23,8 +23,6 @@ import {concatBytes, utf8ToBytes} from "@noble/hashes/utils";
 import {x25519} from "@noble/curves/ed25519";
 
 export const FORMATO_AVANCE = "reallearningpy-avance";
-export const FORMATO_CLAVE_PRIVADA = "reallearningpy-clave-privada-profesor";
-export const FORMATO_CLAVE_PUBLICA = "reallearningpy-clave-publica-profesor";
 
 const PARAMETROS_SCRYPT = {N: 2 ** 15, r: 8, p: 1};
 const INFO_PROFESOR = utf8ToBytes("reallearningpy-profesor-v1");
@@ -192,40 +190,41 @@ export function abrirComoProfesor(archivo, clavePrivadaProfesor) {
   return descifrarDatos(archivo, claveDatos);
 }
 
-// ---------- Claves del profesor ----------
+// ---------- Llave del profesor derivada de una frase secreta ----------
+//
+// La llave privada del profesor no se guarda en ningún archivo: se calcula cada vez a partir
+// de su frase secreta. Así no hay nada que descargar, copiar o perder; basta con recordar la frase.
+// La frase se normaliza (minúsculas y espacios simples) para evitar errores al escribirla.
 
-export async function generarClavesProfesor(contrasena) {
-  const privada = x25519.utils.randomPrivateKey();
-  const publica = x25519.getPublicKey(privada);
-  const kdf = nuevoKdf();
-  const claveContrasena = await derivarClave(contrasena, kdf);
-  const huellaPublica = huella(publica);
-  return {
-    archivoPrivado: {
-      formato: FORMATO_CLAVE_PRIVADA,
-      version: 1,
-      creado: new Date().toISOString(),
-      huella: huellaPublica,
-      clavePublica: aBase64(publica),
-      kdf,
-      clave: cifrar(claveContrasena, privada),
-    },
-    archivoPublico: {
-      formato: FORMATO_CLAVE_PUBLICA,
-      version: 1,
-      huella: huellaPublica,
-      clavePublica: aBase64(publica),
-    },
-  };
+const KDF_PROFESOR = {N: 2 ** 16, r: 8, p: 1, sal: "RealLearningPy/llave-profesor/v1"};
+export const MIN_CARACTERES_FRASE = 20;
+export const MIN_PALABRAS_FRASE = 4;
+
+export function normalizarFrase(frase) {
+  return frase.normalize("NFC").trim().replace(/\s+/g, " ").toLocaleLowerCase("es");
 }
 
-export async function abrirClavePrivadaProfesor(archivo, contrasena) {
-  if (!archivo || archivo.formato !== FORMATO_CLAVE_PRIVADA) {
-    throw new Error("Este archivo no es una clave privada de profesor de RealLearningPy.");
+/** Devuelve un mensaje de error si la frase es demasiado débil, o null si es aceptable. */
+export function problemaConFrase(frase) {
+  const normal = normalizarFrase(frase);
+  if (normal.split(" ").length < MIN_PALABRAS_FRASE) {
+    return `Usa una frase de al menos ${MIN_PALABRAS_FRASE} palabras.`;
   }
-  const claveContrasena = await derivarClave(contrasena, archivo.kdf);
-  const privada = descifrar(claveContrasena, archivo.clave);
-  return {privada, huella: huella(x25519.getPublicKey(privada))};
+  if (normal.length < MIN_CARACTERES_FRASE) {
+    return `Usa una frase de al menos ${MIN_CARACTERES_FRASE} caracteres.`;
+  }
+  return null;
+}
+
+export async function llaveDesdeFrase(frase) {
+  const {N, r, p, sal} = KDF_PROFESOR;
+  const privada = await scryptAsync(
+    codificador.encode(normalizarFrase(frase)),
+    utf8ToBytes(sal),
+    {N, r, p, dkLen: 32, asyncTick: 20},
+  );
+  const publica = x25519.getPublicKey(privada);
+  return {privada, clavePublica: aBase64(publica), huella: huella(publica)};
 }
 
 export function leerClavePublica(texto) {

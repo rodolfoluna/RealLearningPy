@@ -2,10 +2,13 @@ const path = require('path');
 const {PyodidePlugin} = require("@pyodide/webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 
+// La app del profesor no ejecuta Python, así que no necesita Pyodide ni birdseye
+const esProfesor = process.env.REACT_APP_MODO === "profesor";
+
 module.exports = {
   webpack: {
     plugins: {
-      add: [
+      add: esProfesor ? [] : [
         // Copia Pyodide (el intérprete de Python) dentro de la app para no depender de un CDN
         new PyodidePlugin(),
         // Los archivos de birdseye se emiten como parte de la compilación

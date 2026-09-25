@@ -4,7 +4,6 @@ import Popup from "reactjs-popup";
 import {useSelector} from "react-redux";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-  faChalkboardTeacher,
   faDownload,
   faExclamationCircle,
   faLock,
@@ -161,9 +160,6 @@ function ContenidoMiAvance({cerrar}) {
       <button className="btn btn-outline-danger btn-sm" onClick={() => setConfirmarCambio(true)}>
         <FontAwesomeIcon icon={faUsers}/> Cambiar de alumno
       </button>
-      <a className="btn btn-outline-secondary btn-sm" href="#profesor" onClick={cerrar}>
-        <FontAwesomeIcon icon={faChalkboardTeacher}/> Panel del profesor
-      </a>
     </div>
     {confirmarCambio &&
       <div className="alert alert-danger mt-3">

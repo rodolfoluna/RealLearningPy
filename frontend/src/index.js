@@ -1,26 +1,9 @@
-import React from 'react';
-import "./css/bootstrap-4.4.1.min.css";
-import ReactDOM from 'react-dom';
-import {App} from './App';
-import {Provider} from "react-redux";
-import {store} from "./store";
-import {ErrorBoundary} from "./Feedback";
-import {Acceso} from "./local/Acceso";
-
-
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-
-
-ReactDOM.render(
-  <Provider store={store}>
-    <ErrorBoundary>
-      <Acceso>
-        <App/>
-      </Acceso>
-    </ErrorBoundary>
-  </Provider>,
-  document.getElementById("root")
-);
-
-// Always run the service worker (even in dev) (but it only enables PWA-style precaching depending on an env variable)
-serviceWorkerRegistration.register();
+// La misma base de código genera dos aplicaciones independientes:
+// - la del alumno (el curso), publicada en la raíz;
+// - la del profesor (revisar archivos de avance), publicada en la carpeta profesor/.
+// REACT_APP_MODO se fija al compilar, así que cada app sólo incluye su propio código.
+if (process.env.REACT_APP_MODO === "profesor") {
+  require("./indexProfesor");
+} else {
+  require("./indexAlumno");
+}

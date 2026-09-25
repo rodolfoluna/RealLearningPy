@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-  faChalkboardTeacher,
   faFileUpload,
   faLock,
   faUserPlus,
@@ -17,23 +16,12 @@ import {
   NOMBRE_APP,
   recuperarSesionTemporal,
 } from "./perfil";
-import {PanelProfesor} from "./PanelProfesor";
 import {BotonTrabajando, Campo, Mensaje} from "./componentes";
 import "./local.scss";
 
 export const PerfilContext = React.createContext({perfil: null, bloquear: () => {}});
 
 const MIN_CONTRASENA = 4;
-
-function useHash() {
-  const [hash, setHash] = useState(window.location.hash.substring(1));
-  useEffect(() => {
-    const alCambiar = () => setHash(window.location.hash.substring(1));
-    window.addEventListener("hashchange", alCambiar);
-    return () => window.removeEventListener("hashchange", alCambiar);
-  }, []);
-  return hash;
-}
 
 function FormularioNuevo({alCancelar}) {
   const [datos, setDatos] = useState({numeroControl: "", nombre: "", contrasena: "", confirmacion: ""});
@@ -246,10 +234,6 @@ function PantallaAcceso({children}) {
       <div className="card-body">
         <h1 className="titulo-app">{NOMBRE_APP}</h1>
         {children}
-        <hr/>
-        <a href="#profesor" className="btn btn-sm btn-outline-secondary">
-          <FontAwesomeIcon icon={faChalkboardTeacher}/> Soy profesor
-        </a>
       </div>
     </div>
   </div>;
@@ -257,12 +241,10 @@ function PantallaAcceso({children}) {
 
 /**
  * Muestra la pantalla de bienvenida o de contraseña antes de dejar usar el curso.
- * Con #profesor en la URL muestra el panel del profesor.
  */
 export function Acceso({children}) {
   const [fase, setFase] = useState("cargando");
   const [perfil, setPerfil] = useState(null);
-  const hash = useHash();
 
   useEffect(() => {
     (async () => {
@@ -285,10 +267,6 @@ export function Acceso({children}) {
     cerrarSesion();
     setFase("bloqueado");
   }, []);
-
-  if (hash === "profesor") {
-    return <PanelProfesor/>;
-  }
 
   if (fase === "cargando") {
     return <PantallaAcceso><p>Cargando...</p></PantallaAcceso>;

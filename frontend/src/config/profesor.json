@@ -1,4 +1,4 @@
 {
-  "__instrucciones": "Pega aquí la clave pública del profesor (el valor de 'clavePublica' del archivo clave_publica_profesor.json generado en el Panel del profesor) y vuelve a compilar la app. También puedes usar la variable de entorno REACT_APP_CLAVE_PUBLICA_PROFESOR al compilar.",
+  "__instrucciones": "Llave pública del profesor. Lo recomendado es configurarla con la variable CLAVE_PUBLICA_PROFESOR de GitHub Actions (o REACT_APP_CLAVE_PUBLICA_PROFESOR al compilar). También puedes pegarla aquí. Se obtiene en la app del profesor al crear la frase secreta.",
   "clavePublica": ""
 }

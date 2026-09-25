@@ -147,3 +147,6 @@ translations/codes.json
 .DS_Store
 translations/chunks/
 dist/
+
+# Valores por defecto de la app (no son secretos)
+!frontend/.env

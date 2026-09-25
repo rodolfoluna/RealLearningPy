@@ -19,36 +19,43 @@ en computadoras, tabletas y celulares. Está basado en [futurecoder](https://git
   - Sólo lo pueden abrir **el propio alumno** (con su contraseña) y **el profesor** (con su clave privada).
   - Un alumno no puede abrir el archivo de otro alumno.
   - Si el archivo se modifica, deja de poder abrirse.
-- **Panel del profesor**: abre los archivos de todos los alumnos a la vez, muestra el avance por alumno y por
-  lección (con fechas), descarga un reporte **CSV para Excel** y permite **restablecer la contraseña** de un alumno.
+- **App del profesor separada** (`/profesor/`): abre los archivos de todos los alumnos a la vez, muestra el
+  avance por alumno y por lección (con fechas), descarga un reporte **CSV para Excel** y permite **restablecer la
+  contraseña** de un alumno. La app del alumno no incluye nada de esta parte.
+- **Llave del profesor basada en una frase secreta**: no existe ningún archivo de llave que se pueda descargar,
+  copiar o perder; la llave se calcula cada vez a partir de la frase que sólo conoce el profesor.
 - Se quitó el "modo desarrollador" para que los alumnos no puedan saltarse pasos.
 
 ## Guía para el profesor
 
-### 1. Crear tus claves (una sola vez)
+La app del profesor está en `https://<usuario>.github.io/<repositorio>/profesor/` (o en `dist/profesor/` si la
+compilas tú). También funciona sin conexión después de abrirla una vez.
 
-1. Abre la app y en la pantalla inicial elige **Soy profesor** (o *Menú → Panel del profesor*).
-2. En **Generar claves del profesor** escribe una contraseña (mínimo 8 caracteres) y pulsa *Generar claves*.
-3. Se descarga `clave_privada_profesor.json`. **Guárdalo en un lugar seguro con su contraseña y no lo compartas.**
-   Si lo pierdes no podrás abrir los archivos creados para esa clave.
-4. Copia la **clave pública** que aparece en pantalla y configúrala en la app (paso 2).
+### 1. Crear tu frase secreta (una sola vez)
 
-### 2. Configurar la clave pública en la app
+1. Abre la app del profesor. Mientras la app de los alumnos no tenga configurada tu llave, verás
+   **Crea tu frase secreta**.
+2. Escribe una frase de **al menos 4 palabras sin relación entre sí** (por ejemplo, *nopal bicicleta lunes marimba
+   ventana*) y repítela. No distingue mayúsculas ni espacios extra.
+3. La app calcula tu llave y te muestra la **llave pública** (no es secreta).
 
-Elige una opción y vuelve a publicar la app:
+> **Importante:** la frase no se guarda en ningún lugar. Memorízala o guárdala en un lugar seguro. Si la olvidas,
+> no podrás abrir los archivos de los alumnos; si alguien más la conoce, podrá abrirlos.
 
-- **GitHub Pages (recomendado)**: en el repositorio ve a *Settings → Secrets and variables → Actions →
-  Variables* y crea la variable `CLAVE_PUBLICA_PROFESOR` con el valor de la clave pública.
-- O edita `frontend/src/config/profesor.json` y pega la clave en el campo `clavePublica`.
-- O compila con la variable de entorno `REACT_APP_CLAVE_PUBLICA_PROFESOR`.
+### 2. Configurar la llave pública en la app de los alumnos
 
-Haz esto **antes** de que los alumnos empiecen: los archivos creados sin clave de profesor sólo los puede abrir
-el alumno (basta con que el alumno vuelva a descargar su archivo cuando la clave ya esté configurada).
-En el panel verás la **huella** de la clave configurada (p. ej. `8742-339D-94E7`) para comprobar que coincide.
+En GitHub ve a *Settings → Secrets and variables → Actions → Variables*, crea la variable
+`CLAVE_PUBLICA_PROFESOR` con la llave pública y vuelve a publicar (pestaña *Actions → Publicar en GitHub Pages →
+Run workflow*). También puedes pegarla en `frontend/src/config/profesor.json` o compilar con
+`REACT_APP_CLAVE_PUBLICA_PROFESOR`.
+
+Hazlo **antes** de que los alumnos empiecen: los archivos creados sin llave de profesor sólo los puede abrir el
+alumno (basta con que el alumno vuelva a descargar su archivo cuando la llave ya esté configurada).
 
 ### 3. Revisar el avance de los alumnos
 
-1. *Panel del profesor → Abrir mi clave de profesor*: elige `clave_privada_profesor.json` y escribe su contraseña.
+1. Abre la app del profesor y escribe tu frase secreta. Si la escribes mal, la app te avisa que no corresponde a
+   la llave configurada (huella, p. ej. `2E79-5259-4B3E`).
 2. Elige (o arrastra) los archivos `.rlpy` de los alumnos. Puedes abrir muchos a la vez; si hay varios del mismo
    alumno se muestra el más reciente.
 3. *Ver detalle* muestra el avance por capítulo y lección, las fechas y el código que tenía en el editor.
@@ -56,7 +63,7 @@ En el panel verás la **huella** de la clave configurada (p. ej. `8742-339D-94E7
 5. *Restablecer contraseña*: si un alumno olvidó su contraseña, crea una copia de su archivo con una contraseña
    nueva. El alumno la carga con *Ya tengo mi archivo de avance*.
 
-La clave privada sólo se usa en memoria mientras el panel está abierto; nada se envía a ningún servidor.
+La llave sólo existe en memoria mientras la app del profesor está abierta; nada se envía a ningún servidor.
 
 ## Guía para el alumno
 
@@ -79,7 +86,8 @@ El flujo `.github/workflows/publicar.yml` compila y publica la app automáticame
 2. (Opcional) crea la variable `CLAVE_PUBLICA_PROFESOR` (ver arriba).
 3. Haz *push* a `main` o ejecuta el flujo manualmente desde la pestaña *Actions*.
 
-La app queda en `https://<usuario>.github.io/<repositorio>/`. Cada alumno necesita internet **sólo la primera
+La app del alumno queda en `https://<usuario>.github.io/<repositorio>/` y la del profesor en
+`https://<usuario>.github.io/<repositorio>/profesor/`. Cada alumno necesita internet **sólo la primera
 vez** que la abre (descarga unos 25 MB); después puede instalarla (menú del navegador → *Instalar app* /
 *Agregar a pantalla de inicio*) y usarla sin conexión.
 
@@ -87,8 +95,8 @@ vez** que la abre (descarga unos 25 MB); después puede instalarla (menú del na
 
 ```bash
 ./scripts/install_deps.sh       # una vez (requiere Python 3.12.1, poetry y Node 22)
-./scripts/build.sh              # genera la carpeta dist/
-python scripts/servir_local.py  # abre http://localhost:8000
+./scripts/build.sh              # genera dist/ (alumno) y dist/profesor/ (profesor)
+python scripts/servir_local.py  # alumno: http://localhost:8000  profesor: http://localhost:8000/profesor/
 ```
 
 La carpeta `dist/` se puede copiar a otra computadora y servir con `python scripts/servir_local.py`
@@ -103,10 +111,13 @@ La carpeta `dist/` se puede copiar a otra computadora y servir con `python scrip
 - Cifrado del archivo de avance (`frontend/src/local/cripto.js`, librerías [@noble](https://paulmillr.com/noble/)
   en JavaScript puro, funcionan sin conexión):
   - los datos se cifran con una clave aleatoria usando **XChaCha20-Poly1305**;
-  - esa clave se guarda cifrada con la contraseña del alumno (**scrypt**) y con la clave pública del profesor
-    (**X25519** + HKDF).
+  - esa clave se guarda cifrada con la contraseña del alumno (**scrypt**) y con la llave pública del profesor
+    (**X25519** + HKDF);
+  - la llave privada del profesor se deriva de su frase secreta con **scrypt** (N=2^16) y nunca se guarda.
 - Perfil y avance del alumno: `frontend/src/local/perfil.js` (IndexedDB en el dispositivo).
-- Pantallas nuevas: `frontend/src/local/Acceso.jsx`, `MiAvance.jsx`, `PanelProfesor.jsx`.
+- Pantallas nuevas: `frontend/src/local/Acceso.jsx`, `MiAvance.jsx` (alumno) y `PanelProfesor.jsx` (profesor).
+- Las dos apps salen del mismo código: `frontend/src/index.js` elige la app según `REACT_APP_MODO`
+  (`alumno` o `profesor`), y cada compilación sólo incluye el código de su app.
 - La traducción al español de la lección *Crear pares clave-valor*, que faltaba en futurecoder, está en
   `translations/extra/` y se aplica con `python -m translations.extra.apply_extra_es`.
 - Limitaciones conocidas: al no haber servidor, un alumno con conocimientos técnicos podría inspeccionar o

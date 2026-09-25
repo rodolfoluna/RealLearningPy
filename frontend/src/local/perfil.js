@@ -10,30 +10,29 @@ import localforage from "localforage";
 import _ from "lodash";
 import chapters from "../chapters.json";
 import {bookState, localStore} from "../book/store";
-import configProfesor from "../config/profesor.json";
 import {
   aBase64,
   deBase64,
   abrirComoAlumno,
   crearArchivoAvance,
   derivarClave,
-  huella,
-  leerClavePublica,
   nuevoKdf,
   verificador,
   ContrasenaIncorrecta,
 } from "./cripto";
+import {
+  clavePublicaProfesor,
+  descargarBlob,
+  EXTENSION,
+  huellaProfesor,
+  leerArchivoJson,
+  NOMBRE_APP,
+  nombreArchivo,
+} from "./comun";
 
-export const NOMBRE_APP = "RealLearningPy";
-export const EXTENSION = ".rlpy";
+export {descargarBlob, EXTENSION, huellaProfesor, leerArchivoJson, NOMBRE_APP, nombreArchivo};
 
 export const almacen = localforage.createInstance({name: "reallearningpy"});
-
-// Clave pública del profesor: la variable de entorno tiene prioridad sobre el archivo de configuración
-export const clavePublicaProfesor = leerClavePublica(
-  process.env.REACT_APP_CLAVE_PUBLICA_PROFESOR || configProfesor.clavePublica
-);
-export const huellaProfesor = clavePublicaProfesor ? huella(clavePublicaProfesor) : null;
 
 // La clave derivada de la contraseña sólo vive en memoria mientras la app está abierta
 const sesion = {
@@ -219,24 +218,6 @@ function paginaActualLegible() {
 
 // ---------- Exportar / importar el archivo de avance ----------
 
-function fechaParaArchivo(fecha = new Date()) {
-  const dos = n => String(n).padStart(2, "0");
-  return `${fecha.getFullYear()}-${dos(fecha.getMonth() + 1)}-${dos(fecha.getDate())}_${dos(fecha.getHours())}${dos(fecha.getMinutes())}`;
-}
-
-function nombreSeguro(texto) {
-  return texto
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .replace(/[^A-Za-z0-9_-]+/g, "_")
-    .replace(/^_+|_+$/g, "")
-    .slice(0, 40);
-}
-
-export function nombreArchivo(numeroControl, nombre) {
-  return `avance_${nombreSeguro(numeroControl)}_${nombreSeguro(nombre)}_${fechaParaArchivo()}${EXTENSION}`;
-}
-
 export async function crearArchivoDelAlumno() {
   if (!sesion.claveAlumno) {
     throw new Error("Primero debes ingresar tu contraseña.");
@@ -260,17 +241,6 @@ export async function crearArchivoDelAlumno() {
   const archivo = crearArchivoAvance(datos, sesion.claveAlumno, perfil.kdf, clavePublicaProfesor);
   const blob = new Blob([JSON.stringify(archivo)], {type: "application/octet-stream"});
   return {blob, nombre: nombreArchivo(perfil.numeroControl, perfil.nombre), perfil};
-}
-
-export function descargarBlob(blob, nombre) {
-  const url = URL.createObjectURL(blob);
-  const enlace = document.createElement("a");
-  enlace.href = url;
-  enlace.download = nombre;
-  document.body.appendChild(enlace);
-  enlace.click();
-  enlace.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 10000);
 }
 
 export function puedeCompartirArchivos() {
@@ -298,15 +268,6 @@ export async function compartirAvance() {
   });
   await actualizarEstado({ultimaExportacion: new Date().toISOString()});
   return nombre;
-}
-
-export async function leerArchivoJson(file) {
-  const texto = await file.text();
-  try {
-    return JSON.parse(texto);
-  } catch (e) {
-    throw new Error(`El archivo "${file.name}" no es válido o está dañado.`);
-  }
 }
 
 /** Abre un archivo de avance con la contraseña del alumno y lo carga en este dispositivo. */

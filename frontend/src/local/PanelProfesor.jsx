@@ -3,7 +3,9 @@ import _ from "lodash";
 import Popup from "reactjs-popup";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-  faArrowLeft,
+  faBookOpen,
+  faEye,
+  faEyeSlash,
   faFileCsv,
   faFolderOpen,
   faKey,
@@ -11,20 +13,21 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import {
-  abrirClavePrivadaProfesor,
   abrirComoProfesor,
   crearArchivoAvance,
   derivarClave,
-  generarClavesProfesor,
+  llaveDesdeFrase,
+  MIN_PALABRAS_FRASE,
   nuevoKdf,
+  problemaConFrase,
 } from "./cripto";
 import {x25519} from "@noble/curves/ed25519";
-import {bookState} from "../book/store";
-import {descargarBlob, huellaProfesor, leerArchivoJson, NOMBRE_APP, nombreArchivo} from "./perfil";
+import {descargarBlob, huellaProfesor, leerArchivoJson, NOMBRE_APP, nombreArchivo} from "./comun";
 import {BotonTrabajando, Campo, Mensaje} from "./componentes";
 
-// La clave privada del profesor sólo se guarda en memoria mientras el panel está abierto
-let clavePrivadaEnMemoria = null;
+// La llave privada del profesor sólo existe en memoria mientras el panel está abierto:
+// se calcula a partir de la frase secreta y nunca se guarda ni se descarga.
+let llaveEnMemoria = null;
 
 function formatoFecha(iso) {
   if (!iso) {
@@ -43,35 +46,69 @@ function Barra({porcentaje}) {
   </div>;
 }
 
-function volverAlCurso() {
-  const pagina = bookState.user?.pageSlug;
-  window.location.hash = pagina && pagina !== "loading_placeholder" ? pagina : "";
+// ---------- Llave del profesor (frase secreta) ----------
+
+function CampoFrase({etiqueta, id, value, onChange, visible, autoFocus}) {
+  return <div className="form-group">
+    <label htmlFor={id}>{etiqueta}</label>
+    <input className="form-control" id={id} type={visible ? "text" : "password"} value={value}
+           onChange={e => onChange(e.target.value)} autoComplete="off" autoCapitalize="none"
+           spellCheck={false} autoFocus={autoFocus}/>
+  </div>;
 }
 
-function descargarJson(objeto, nombre) {
-  descargarBlob(new Blob([JSON.stringify(objeto, null, 2)], {type: "application/json"}), nombre);
+function LlavePublica({llave}) {
+  return <div className="mt-3">
+    <p>
+      Configura esta <b>llave pública</b> en la app de los alumnos. En GitHub: <em>Settings → Secrets and
+      variables → Actions → Variables</em>, crea la variable <code>CLAVE_PUBLICA_PROFESOR</code> con este valor
+      y vuelve a publicar la app:
+    </p>
+    <pre className="clave-publica">{llave.clavePublica}</pre>
+    <button className="btn btn-outline-primary btn-sm"
+            onClick={() => navigator.clipboard?.writeText(llave.clavePublica)}>
+      Copiar llave pública
+    </button>
+    <p className="text-muted mt-2 mb-0">
+      La llave pública no es secreta: sólo sirve para cifrar archivos que únicamente tu frase puede abrir.
+      Su huella es <b>{llave.huella}</b>.
+    </p>
+  </div>;
 }
 
-// ---------- Clave del profesor ----------
-
-function AbrirClave({alAbrir}) {
-  const [archivo, setArchivo] = useState(null);
-  const [contrasena, setContrasena] = useState("");
+function AbrirConFrase({alAbrir}) {
+  const primeraVez = !huellaProfesor;
+  const [frase, setFrase] = useState("");
+  const [confirmacion, setConfirmacion] = useState("");
+  const [visible, setVisible] = useState(false);
   const [error, setError] = useState(null);
   const [trabajando, setTrabajando] = useState(false);
+  const [noCoincide, setNoCoincide] = useState(null);
 
   const enviar = async (e) => {
     e.preventDefault();
     setError(null);
-    if (!archivo) {
-      setError("Elige el archivo de tu clave privada.");
-      return;
+    setNoCoincide(null);
+    if (primeraVez) {
+      const problema = problemaConFrase(frase);
+      if (problema) {
+        setError(problema);
+        return;
+      }
+      if (frase !== confirmacion) {
+        setError("Las frases no coinciden.");
+        return;
+      }
     }
     setTrabajando(true);
     try {
-      const clave = await abrirClavePrivadaProfesor(await leerArchivoJson(archivo), contrasena);
-      clavePrivadaEnMemoria = clave;
-      alAbrir(clave);
+      const llave = await llaveDesdeFrase(frase);
+      if (!primeraVez && llave.huella !== huellaProfesor) {
+        setNoCoincide(llave);
+      } else {
+        llaveEnMemoria = llave;
+        alAbrir(llave);
+      }
     } catch (e) {
       setError(e);
     }
@@ -79,100 +116,53 @@ function AbrirClave({alAbrir}) {
   };
 
   return <form onSubmit={enviar} className="seccion-panel">
-    <h2><FontAwesomeIcon icon={faKey}/> Abrir mi clave de profesor</h2>
-    <p>
-      Para ver los archivos de avance de tus alumnos, abre tu archivo de <b>clave privada</b>{" "}
-      (<code>clave_privada_profesor.json</code>) y escribe su contraseña.
-    </p>
+    <h2><FontAwesomeIcon icon={faKey}/> {primeraVez ? "Crea tu frase secreta" : "Escribe tu frase secreta"}</h2>
+    {primeraVez ?
+      <>
+        <div className="alert alert-warning">
+          <b>La app de los alumnos aún no tiene configurada tu llave.</b> Elige una frase secreta: de ella se
+          calcula tu llave de profesor. No se guarda ni se descarga en ningún lugar, así que <b>memorízala o
+          guárdala en un lugar seguro</b>. Si la olvidas, no podrás abrir los archivos de los alumnos.
+        </div>
+        <p>
+          Usa al menos {MIN_PALABRAS_FRASE} palabras que no tengan relación entre sí, por ejemplo:
+          <em> «nopal bicicleta lunes marimba ventana»</em>. No distingue mayúsculas de minúsculas.
+        </p>
+      </>
+      :
+      <p>
+        Para ver los archivos de avance de tus alumnos escribe tu frase secreta
+        (llave con huella <b>{huellaProfesor}</b>). No distingue mayúsculas de minúsculas.
+      </p>
+    }
+    <CampoFrase etiqueta="Frase secreta" id="frase-profesor" value={frase} onChange={setFrase}
+                visible={visible} autoFocus/>
+    {primeraVez &&
+      <CampoFrase etiqueta="Repite la frase" id="confirmar-frase-profesor" value={confirmacion}
+                  onChange={setConfirmacion} visible={visible}/>
+    }
     <div className="form-group">
-      <label htmlFor="archivo-clave">Archivo de clave privada</label>
-      <input type="file" className="form-control-file" id="archivo-clave"
-             onChange={e => setArchivo(e.target.files[0] || null)}/>
+      <button type="button" className="btn btn-link btn-sm p-0" onClick={() => setVisible(!visible)}>
+        <FontAwesomeIcon icon={visible ? faEyeSlash : faEye}/> {visible ? "Ocultar" : "Mostrar"} frase
+      </button>
     </div>
-    <Campo etiqueta="Contraseña de la clave" name="contrasena-clave" type="password" value={contrasena}
-           onChange={e => setContrasena(e.target.value)} required autoComplete="current-password"/>
     <Mensaje error={error}/>
-    <BotonTrabajando type="submit" className="btn btn-primary" trabajando={trabajando} textoTrabajando="Abriendo...">
-      Abrir clave
-    </BotonTrabajando>
-  </form>;
-}
-
-function GenerarClaves() {
-  const [contrasena, setContrasena] = useState("");
-  const [confirmacion, setConfirmacion] = useState("");
-  const [error, setError] = useState(null);
-  const [trabajando, setTrabajando] = useState(false);
-  const [resultado, setResultado] = useState(null);
-
-  const enviar = async (e) => {
-    e.preventDefault();
-    setError(null);
-    if (contrasena.length < 8) {
-      setError("Usa una contraseña de al menos 8 caracteres.");
-      return;
-    }
-    if (contrasena !== confirmacion) {
-      setError("Las contraseñas no coinciden.");
-      return;
-    }
-    setTrabajando(true);
-    try {
-      const claves = await generarClavesProfesor(contrasena);
-      descargarJson(claves.archivoPrivado, "clave_privada_profesor.json");
-      setResultado(claves);
-    } catch (e) {
-      setError(e);
-    }
-    setTrabajando(false);
-  };
-
-  if (resultado) {
-    const {archivoPublico, archivoPrivado} = resultado;
-    return <div>
-      <div className="alert alert-success">
-        Se descargó <b>clave_privada_profesor.json</b> (huella <b>{archivoPublico.huella}</b>).
-        Guárdalo en un lugar seguro junto con su contraseña y <b>no lo compartas con los alumnos</b>.
-        Si lo pierdes, no podrás abrir los archivos creados para esta clave.
+    {noCoincide &&
+      <div className="alert alert-danger">
+        Esta frase no corresponde a la llave configurada en la app de los alumnos (huella {huellaProfesor}).
+        Revisa que la escribiste igual que la primera vez.
+        <details className="mt-2">
+          <summary>Quiero cambiar mi frase secreta</summary>
+          <p className="mt-2">
+            Si configuras una frase nueva, <b>los archivos que los alumnos descarguen a partir de entonces</b> sólo
+            se abrirán con la frase nueva; los anteriores seguirán necesitando la frase anterior.
+          </p>
+          <LlavePublica llave={noCoincide}/>
+        </details>
       </div>
-      <p>
-        Para que los archivos de avance de los alumnos se puedan abrir con esta clave, la aplicación debe
-        incluir tu <b>clave pública</b>. Cópiala en el archivo <code>frontend/src/config/profesor.json</code> del
-        proyecto (campo <code>clavePublica</code>) o en la variable <code>REACT_APP_CLAVE_PUBLICA_PROFESOR</code> y
-        vuelve a publicar la aplicación:
-      </p>
-      <pre className="clave-publica">{archivoPublico.clavePublica}</pre>
-      <p>
-        <button className="btn btn-outline-primary btn-sm"
-                onClick={() => navigator.clipboard?.writeText(archivoPublico.clavePublica)}>
-          Copiar clave pública
-        </button>{" "}
-        <button className="btn btn-outline-primary btn-sm"
-                onClick={() => descargarJson(archivoPublico, "clave_publica_profesor.json")}>
-          Descargar clave pública
-        </button>{" "}
-        <button className="btn btn-outline-secondary btn-sm"
-                onClick={() => descargarJson(archivoPrivado, "clave_privada_profesor.json")}>
-          Descargar otra vez la clave privada
-        </button>
-      </p>
-      <p className="text-muted">
-        La clave pública no es secreta: sólo sirve para cifrar archivos que únicamente tu clave privada puede abrir.
-      </p>
-    </div>;
-  }
-
-  return <form onSubmit={enviar}>
-    <p>
-      Genera un par de claves nuevo. Sólo necesitas hacerlo <b>una vez</b> (por ejemplo, al inicio del curso).
-    </p>
-    <Campo etiqueta="Contraseña para proteger tu clave privada" name="nueva-contrasena-profesor" type="password"
-           value={contrasena} onChange={e => setContrasena(e.target.value)} autoComplete="new-password"/>
-    <Campo etiqueta="Repite la contraseña" name="confirmar-contrasena-profesor" type="password"
-           value={confirmacion} onChange={e => setConfirmacion(e.target.value)} autoComplete="new-password"/>
-    <Mensaje error={error}/>
-    <BotonTrabajando type="submit" className="btn btn-secondary" trabajando={trabajando} textoTrabajando="Generando...">
-      Generar claves
+    }
+    <BotonTrabajando type="submit" className="btn btn-primary" trabajando={trabajando} textoTrabajando="Calculando llave...">
+      {primeraVez ? "Crear mi llave" : "Abrir"}
     </BotonTrabajando>
   </form>;
 }
@@ -449,54 +439,33 @@ function ArchivosAlumnos({clave}) {
 }
 
 export function PanelProfesor() {
-  const [clave, setClave] = useState(clavePrivadaEnMemoria);
+  const [llave, setLlave] = useState(llaveEnMemoria);
 
   return <div className="panel-profesor">
     <nav className="navbar navbar-dark bg-dark">
-      <span className="navbar-brand">{NOMBRE_APP} · Panel del profesor</span>
-      <button className="btn btn-outline-light btn-sm" onClick={volverAlCurso}>
-        <FontAwesomeIcon icon={faArrowLeft}/> Volver
-      </button>
+      <span className="navbar-brand">{NOMBRE_APP} · Profesor</span>
+      <a className="btn btn-outline-light btn-sm" href="../" target="_blank" rel="noreferrer">
+        <FontAwesomeIcon icon={faBookOpen}/> App del alumno
+      </a>
     </nav>
     <div className="container contenido-panel">
-      {huellaProfesor ?
-        <p className="text-muted">
-          Esta aplicación cifra los archivos de avance para la clave de profesor con huella <b>{huellaProfesor}</b>.
-        </p> :
-        <div className="alert alert-warning">
-          <b>Esta aplicación aún no tiene configurada una clave de profesor.</b> Los archivos de avance que
-          descarguen los alumnos sólo podrán abrirlos ellos mismos. Genera tus claves más abajo y configura la
-          clave pública antes de que los alumnos empiecen a usar la aplicación.
-        </div>
-      }
-
-      {clave ?
+      {llave ?
         <div className="seccion-panel">
-          <p>
-            <FontAwesomeIcon icon={faKey}/> Clave abierta (huella <b>{clave.huella}</b>).{" "}
+          <p className="mb-0">
+            <FontAwesomeIcon icon={faKey}/> Llave abierta (huella <b>{llave.huella}</b>).{" "}
             <button className="btn btn-link btn-sm" onClick={() => {
-              clavePrivadaEnMemoria = null;
-              setClave(null);
+              llaveEnMemoria = null;
+              setLlave(null);
             }}>
-              <FontAwesomeIcon icon={faLock}/> Cerrar clave
+              <FontAwesomeIcon icon={faLock}/> Cerrar
             </button>
           </p>
-          {huellaProfesor && clave.huella !== huellaProfesor &&
-            <div className="alert alert-warning">
-              Esta clave no es la que tiene configurada la aplicación ({huellaProfesor}), así que no podrás abrir
-              los archivos nuevos de los alumnos con ella.
-            </div>
-          }
+          {!huellaProfesor && <LlavePublica llave={llave}/>}
         </div> :
-        <AbrirClave alAbrir={setClave}/>
+        <AbrirConFrase alAbrir={setLlave}/>
       }
 
-      {clave && <ArchivosAlumnos clave={clave}/>}
-
-      <details className="seccion-panel" open={!huellaProfesor}>
-        <summary><h2 className="d-inline">Generar claves del profesor</h2></summary>
-        <div className="mt-3"><GenerarClaves/></div>
-      </details>
+      {llave && <ArchivosAlumnos clave={llave}/>}
     </div>
   </div>;
 }

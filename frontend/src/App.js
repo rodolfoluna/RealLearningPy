@@ -26,7 +26,6 @@ import {
   faBars,
   faBook,
   faBug,
-  faChalkboardTeacher,
   faCode,
   faCompress,
   faExpand,
@@ -599,11 +598,6 @@ const MenuPopup = () =>
         <p>
           <a className="btn btn-outline-primary" href="#toc" onClick={close}>
             <FontAwesomeIcon icon={faListOl}/> {terms.table_of_contents}
-          </a>
-        </p>
-        <p>
-          <a className="btn btn-outline-secondary" href="#profesor" onClick={close}>
-            <FontAwesomeIcon icon={faChalkboardTeacher}/> Panel del profesor
           </a>
         </p>
         <p>

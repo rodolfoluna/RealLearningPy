@@ -119,7 +119,7 @@ const afterSetPage = (pageSlug, state = localState) => {
   window.location.hash = pageSlug;
 }
 
-export const specialHash = (hash) => ["toc", "ide", "question", "profesor"].includes(hash);
+export const specialHash = (hash) => ["toc", "ide", "question"].includes(hash);
 
 export const navigate = () => {
   const hash = window.location.hash.substring(1);
