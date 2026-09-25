@@ -1,0 +1,4 @@
+{
+  "__instrucciones": "Pega aquí la clave pública del profesor (el valor de 'clavePublica' del archivo clave_publica_profesor.json generado en el Panel del profesor) y vuelve a compilar la app. También puedes usar la variable de entorno REACT_APP_CLAVE_PUBLICA_PROFESOR al compilar.",
+  "clavePublica": ""
+}

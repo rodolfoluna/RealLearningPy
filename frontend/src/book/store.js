@@ -2,49 +2,18 @@ import {ipush, iremove, iset, redact} from "../frontendlib";
 import {animateScroll, scroller} from "react-scroll";
 import _ from "lodash";
 import {terminalRef} from "../RunCode";
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/analytics";
 import pagesUrl from "./pages.json.load_by_url"
 import axios from "axios";
 import terms from "../terms.json"
-import * as Sentry from "@sentry/react";
 import {wrapAsync} from "../frontendlib/sentry";
 import pRetry from 'p-retry';
 import localforage from "localforage";
-import {languageConfig} from "../languages";
 
-export const disableFirebase = !!process.env.REACT_APP_DISABLE_FIREBASE;
-export const disableLogin = disableFirebase || !!process.env.REACT_APP_DISABLE_LOGIN;
-
-const firebaseConfig = !process.env.REACT_APP_FIREBASE_STAGING ? languageConfig.firebaseConfig : {
-  apiKey: "AIzaSyC3S9l7lI3f3IiiWURO_AGmWBTLP0lKeC0",
-  authDomain: "futurecoder-staging.firebaseapp.com",
-  databaseURL: "https://futurecoder-staging-default-rtdb.firebaseio.com",
-  projectId: "futurecoder-staging",
-  storageBucket: "futurecoder-staging.appspot.com",
-  messagingSenderId: "513885780206",
-  appId: "1:513885780206:web:1144315640a5ba46c01bff"
-};
-const firebaseApp = !disableFirebase && firebase.initializeApp(firebaseConfig);
-
-let {databaseURL} = firebaseConfig;
-
-if (!disableFirebase && process.env.REACT_APP_USE_FIREBASE_EMULATORS && window.location.hostname === "localhost") {
-  // firebase.database().useEmulator("localhost", 9009);
-  databaseURL = "http://localhost:9009";
-  firebase.auth().useEmulator("http://localhost:9099");
-}
-
-let firebaseAnalytics;
-export const isProduction = !disableFirebase && window.location.hostname.endsWith("futurecoder.io");
-if (isProduction) {
-  firebase.analytics.isSupported().then((isSupported) => {
-    if (isSupported) {
-      firebaseAnalytics = firebase.analytics(firebaseApp);
-    }
-  });
-}
+// Esta versión funciona completamente sin conexión: no hay cuentas ni base de datos en línea.
+// El avance se guarda en el dispositivo y se exporta a un archivo cifrado (ver src/local/).
+export const disableFirebase = true;
+export const disableLogin = true;
+export const isProduction = false;
 
 const initialState = {
   error: null,
@@ -150,7 +119,7 @@ const afterSetPage = (pageSlug, state = localState) => {
   window.location.hash = pageSlug;
 }
 
-export const specialHash = (hash) => ["toc", "ide", "question"].includes(hash);
+export const specialHash = (hash) => ["toc", "ide", "question", "profesor"].includes(hash);
 
 export const navigate = () => {
   const hash = window.location.hash.substring(1);
@@ -246,59 +215,17 @@ export const signOut = makeAction(
   },
 );
 
-if (!disableFirebase) {
-  firebase.auth().onAuthStateChanged(async (user) => {
-    if (user) {
-      // TODO ideally we'd set a listener on the user instead of just getting it once
-      //   to sync changes made on multiple devices
-      await updateUserData(user);
-    } else {
-      await firebase.auth().signInAnonymously();
-    }
-  });
-}
-
-export const updateUserData = async (user) => {
-  Sentry.setUser({id: user.uid});
-  const userData = await databaseRequest("GET");
-  // loadUser should be called on the local store data first
-  // for proper merging with the firebase user data in loadUserAndPages
-  await loadUserFromLocalStorePromise;
-  loadUser({
-    uid: user.uid,
-    email: user.email,
-    ...userData,
-  });
-}
-
 export const initialUser = {uid: "__futurecoder_offline__"}
 
 export const localStore = localforage.createInstance({name: "futurecoder"});
 
-const loadUserFromLocalStorePromise = localStore.getItem("user").then(user => {
+localStore.getItem("user").then(user => {
   loadUser(user || initialUser);
 });
 
-export const databaseRequest = wrapAsync(async function databaseRequest(method, data={}, endpoint="users") {
-  if (disableFirebase) {
-    return;
-  }
-  const currentUser = firebase.auth().currentUser;
-  if (!currentUser) {
-    return;
-  }
-  const auth = await currentUser.getIdToken();
-  const response = await pRetry(() =>
-      axios.request({
-        url: `${databaseURL}/${endpoint}/${currentUser.uid}.json`,
-        params: {auth},
-        method,
-        data,
-      }),
-    {retries: 3},
-  )
-  return response.data;
-});
+export const databaseRequest = async () => {
+  // Sin base de datos en línea: los datos se guardan localmente (ver saveToLocalStoreMiddleware en store.js)
+};
 
 export const updateDatabase = (updates) => {
   return databaseRequest("PATCH", updates);
@@ -510,7 +437,6 @@ export const reorderSolutionLines = makeAction(
 
 export function logEvent(name, data = {}) {
   console.log("Logging event", name, data);
-  firebaseAnalytics?.logEvent(name, data);
 }
 
 export function postCodeEntry(codeEntry) {

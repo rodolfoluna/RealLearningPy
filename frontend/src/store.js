@@ -6,6 +6,8 @@ import {dispatcher, redact, TextContainer} from "./frontendlib";
 import {bookReducer, currentStep, localStore, navigate} from "./book/store";
 import * as Sentry from "@sentry/react";
 import _ from "lodash";
+import {bloqueoGuardado} from "./local/perfil";
+import {iniciarSeguimiento} from "./local/seguimiento";
 
 const sentryReduxEnhancer = Sentry.createReduxEnhancer({
   actionTransformer: action => {
@@ -60,7 +62,7 @@ const saveToLocalStoreMiddleware = store => next => async (action) => {
   // update the storage, we have the values that we need.
   next(action);
   const {user, editorContent} = store.getState().book;
-  if (!user.uid) {  // still in initial loading stage
+  if (!user.uid || bloqueoGuardado.activo) {  // still in initial loading stage, or replacing local data
     return;
   }
   // Save the data in the same shape as in firebase
@@ -81,7 +83,8 @@ export const store = createStore(
   composeEnhancers(
     applyMiddleware(
       thunk,
-      logger,
+      // Registrar cada acción en la consola sólo durante el desarrollo (es lento en celulares)
+      ...(process.env.NODE_ENV === "development" ? [logger] : []),
       saveToLocalStoreMiddleware,
     ),
     sentryReduxEnhancer,
@@ -89,6 +92,7 @@ export const store = createStore(
 );
 
 dispatcher.store = store;
+iniciarSeguimiento(store);
 redact.store = store;
 window.reduxStore = store;
 

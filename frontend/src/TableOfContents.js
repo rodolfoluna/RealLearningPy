@@ -3,6 +3,7 @@ import "./css/toc.scss"
 import chapters from "./chapters.json"
 import {bookState} from "./book/store";
 import terms from "./terms.json"
+import {NOMBRE_APP} from "./local/perfil";
 
 export const TableOfContents = () => {
   const current = bookState.user.pageSlug;
@@ -10,7 +11,8 @@ export const TableOfContents = () => {
     <div className="backend bg-dark toc">
       <div className="toc-header">
         <div className="container">
-          <h1>futurecoder</h1>
+          <a href={"#" + current} className="btn btn-outline-light btn-sm mb-3">&larr; Volver a la lección</a>
+          <h1>{NOMBRE_APP}</h1>
           <div dangerouslySetInnerHTML={{__html: terms.toc_instructions}}/>
         </div>
       </div>
@@ -29,7 +31,7 @@ export const TableOfContents = () => {
                     <ol>
                       {chapter.pages.map(page => {
                         const isCurrent = page.slug === current;
-                          return <li>
+                          return <li key={page.slug}>
                             <a href={"#" + page.slug}
                                style={isCurrent ? {
                                  border: '2px solid white',

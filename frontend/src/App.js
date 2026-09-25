@@ -11,17 +11,10 @@ import {
   closeSpecialMessage,
   currentPage,
   currentStep,
-  currentStepName,
-  disableLogin,
-  logEvent,
-  movePage,
-  moveStep,
   openAssessment,
-  postCodeEntry,
-  setDeveloperMode,
   setEditorContent,
-  signOut,
   specialHash,
+  movePage,
 } from "./book/store";
 import Popup from "reactjs-popup";
 import AceEditor from "react-ace";
@@ -31,32 +24,28 @@ import "ace-builds/src-noconflict/theme-monokai";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {
   faBars,
+  faBook,
   faBug,
-  faCog,
+  faChalkboardTeacher,
+  faCode,
   faCompress,
   faExpand,
-  faLightbulb,
-  faListCheck,
+  faInfoCircle,
   faListOl,
   faPlay,
   faQuestionCircle,
-  faSignOutAlt,
   faStop,
   faUserGraduate
 } from '@fortawesome/free-solid-svg-icons'
 import {HintsAssistant} from "./Hints";
-import Toggle from 'react-toggle'
-import "react-toggle/style.css"
-import {ErrorBoundary, FeedbackMenuButton} from "./Feedback";
+import {ErrorBoundary} from "./Feedback";
 import birdseyeIcon from "./img/birdseye_icon.png";
-import languageIcon from "./img/language.png";
 import {interrupt, runCode, terminalRef} from "./RunCode";
-import firebase from "firebase/app";
 import {TableOfContents} from "./TableOfContents";
-import HeaderLoginInfo from "./components/HeaderLoginInfo";
 import terms from "./terms.json"
 import _ from "lodash";
-import {otherVisibleLanguages} from "./languages";
+import {BotonMiAvance} from "./local/MiAvance";
+import {NOMBRE_APP} from "./local/perfil";
 
 
 const EditorButtons = (
@@ -101,7 +90,7 @@ const EditorButtons = (
 
     {" "}
 
-    {showPythonTutor &&
+    {showPythonTutor && navigator.onLine &&
       <button
         disabled={disabled || running}
         className="btn btn-success"
@@ -438,36 +427,65 @@ const CourseText = (
       </button>}
     </div>
     <br/>
-    {
-      user.developerMode && <StepButtons/>
-    }
   </>
 
 class AppComponent extends React.Component {
+  // En pantallas pequeñas (celulares) se muestra la lección o el código, uno a la vez
+  state = {vistaMovil: "leccion", pasoNuevo: false};
+
+  componentDidUpdate(prevProps) {
+    const pasoAnterior = prevProps.user.pagesProgress?.[prevProps.user.pageSlug]?.step_name;
+    const pasoActual = this.props.user.pagesProgress?.[this.props.user.pageSlug]?.step_name;
+    if (pasoAnterior !== pasoActual && prevProps.user.pageSlug === this.props.user.pageSlug
+      && this.state.vistaMovil === "codigo") {
+      this.setState({pasoNuevo: true});
+    }
+  }
+
+  cambiarVista = (vistaMovil) => {
+    this.setState({vistaMovil, pasoNuevo: vistaMovil === "leccion" ? false : this.state.pasoNuevo});
+  }
+
   render() {
     if (this.props.route === "toc") {
       return <TableOfContents/>
     }
 
-    return <div className="book-container">
+    const {vistaMovil, pasoNuevo} = this.state;
+    return <div className={`book-container vista-movil-${vistaMovil}`}>
       <NavBar user={this.props.user}/>
       <ErrorBoundary canGiveFeedback>
         <AppMain {...this.props}/>
       </ErrorBoundary>
+      <PestanasMovil vista={vistaMovil} pasoNuevo={pasoNuevo} cambiar={this.cambiarVista}/>
     </div>
   }
 }
 
+function PestanasMovil({vista, pasoNuevo, cambiar}) {
+  return <div className="pestanas-movil btn-group" role="group">
+    <button className={"btn " + (vista === "leccion" ? "btn-primary" : "btn-light")}
+            onClick={() => cambiar("leccion")}>
+      <FontAwesomeIcon icon={faBook}/> Lección
+      {pasoNuevo && <span className="badge badge-pill badge-warning ml-1">Nuevo</span>}
+    </button>
+    <button className={"btn " + (vista === "codigo" ? "btn-primary" : "btn-light")}
+            onClick={() => cambiar("codigo")}>
+      <FontAwesomeIcon icon={faCode}/> Código
+    </button>
+  </div>;
+}
+
 function NavBar({user}) {
   return <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <span className="nav-item custom-popup">
-          <MenuPopup user={user}/>
-        </span>
-    <span className="nav-item navbar-text">
-          <HeaderLoginInfo email={user.email}/>
-        </span>
+    <span className="nav-item custom-popup">
+      <MenuPopup user={user}/>
+    </span>
+    <span className="nav-item">
+      <BotonMiAvance/>
+    </span>
     <a className="nav-item nav-link" href="#toc">
-      <FontAwesomeIcon icon={faListOl}/> {terms.table_of_contents}
+      <FontAwesomeIcon icon={faListOl}/> <span className="texto-toc">{terms.table_of_contents}</span>
     </a>
   </nav>;
 }
@@ -569,100 +587,53 @@ function AppMain(
   </>;
 }
 
-const StepButton = ({delta, label}) =>
-  <button className={`btn btn-danger btn-sm button-${label.replace(" ", "-").toLowerCase()}`}
-          onClick={() => {
-            const entry = {skip_step: delta, page_slug: bookState.user.pageSlug, step_name: currentStepName()};
-            postCodeEntry(entry);
-            logEvent('skip_step', entry);
-            moveStep(delta);
-          }}>
-    {label}
-  </button>
-
-const StepButtons = () =>
-  <div style={{position: "fixed", bottom: 0}}>
-    <StepButton delta={-1} label={terms.reverse_step}/>
-    {" "}
-    <StepButton delta={+1} label={terms.skip_step}/>
-  </div>
-
-
-const MenuPopup = ({user}) =>
+const MenuPopup = () =>
     <Popup
       nested
       trigger={
-        <button className="btn btn-sm btn-outline-secondary">
+        <button className="btn btn-sm btn-outline-secondary" aria-label="Menú">
           <FontAwesomeIcon icon={faBars} size="lg"/>
         </button>}
     >
       {close => <div className="menu-popup">
-        {!disableLogin &&
-          <p>
-            <button
-              className="btn btn-danger"
-              onClick={() => {
-                close();
-                signOut();
-                firebase.auth().signOut();
-              }}
-            >
-              <FontAwesomeIcon icon={faSignOutAlt}/> {terms.sign_out}
-            </button>
-          </p>
-        }
+        <p>
+          <a className="btn btn-outline-primary" href="#toc" onClick={close}>
+            <FontAwesomeIcon icon={faListOl}/> {terms.table_of_contents}
+          </a>
+        </p>
+        <p>
+          <a className="btn btn-outline-secondary" href="#profesor" onClick={close}>
+            <FontAwesomeIcon icon={faChalkboardTeacher}/> Panel del profesor
+          </a>
+        </p>
         <p>
           <Popup
             trigger={
-              <button className="btn btn-primary">
-                <FontAwesomeIcon icon={faCog}/> {terms.settings}
+              <button className="btn btn-outline-secondary">
+                <FontAwesomeIcon icon={faInfoCircle}/> Acerca de
               </button>
-              }
+            }
             modal
             nested
           >
-            <SettingsModal user={user}/>
+            <AcercaDe/>
           </Popup>
         </p>
-        <FeedbackMenuButton/>
-        {
-          otherVisibleLanguages.map(lang =>
-            <p key={lang.code}>
-              <a href={lang.url + "course/"} className="btn btn-link"
-                 style={{borderColor: "grey"}}>
-                <img
-                  alt="language icon"
-                  src={languageIcon}
-                  width={24}
-                  height={24}
-                  style={{
-                    display: "inline",
-                    position: "relative",
-                    top: "-2px",
-                    left: "-2px",
-                  }}
-                /> {lang.name}
-              </a>
-            </p>
-          )
-        }
       </div>}
     </Popup>
 
 
-const SettingsModal = ({user}) => (
+const AcercaDe = () => (
   <div className="settings-modal">
-    <h1>{terms.settings}</h1>
-    <br/>
-    <label>
-      <Toggle
-        defaultChecked={user.developerMode}
-        onChange={(e) => setDeveloperMode(e.target.checked)}
-      />
-      <b>{terms.developer_mode}</b>
-    </label>
-
-    <p>{terms.developer_mode_description}</p>
+    <h3>{NOMBRE_APP}</h3>
+    <p>
+      Curso interactivo de Python en español que funciona sin conexión a internet.
+      Tu avance se guarda en este dispositivo y puedes descargarlo como un archivo cifrado desde <em>Mi avance</em>.
+    </p>
+    <p>
+      Basado en <b>futurecoder</b> (futurecoder.io), creado por Alex Hall y colaboradores,
+      publicado bajo la licencia MIT.
+    </p>
   </div>
 )
 

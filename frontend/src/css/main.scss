@@ -507,3 +507,155 @@
     }
   }
 }
+
+// ---------------------------------------------------------------------------
+// Diseño responsive (RealLearningPy)
+// En celulares y tabletas en vertical se muestra la lección o el código, uno a la vez,
+// con pestañas en la parte inferior de la pantalla.
+// ---------------------------------------------------------------------------
+
+$barra-superior: 50px;
+$botones-editor: 46px;
+$pestanas: 56px;
+
+.pestanas-movil {
+  display: none;
+}
+
+.navbar .nav-item + .nav-item {
+  margin-left: 0.5em;
+}
+
+@media (max-width: 900px) {
+  .book-container {
+    margin-left: 0;
+    width: 100%;
+    padding: 0 12px calc(#{$pestanas} + 12px);
+
+    .navbar {
+      left: 0;
+      width: 100%;
+      padding: 8px 12px 0;
+      flex-wrap: nowrap;
+      overflow: hidden;
+      background: #f8f9fa;
+    }
+
+    .book-text {
+      margin-top: calc(#{$barra-superior} + 12px);
+    }
+  }
+
+  .markdown-body {
+    font-size: 15px;
+
+    pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  }
+
+  .menu-popup {
+    left: 8px;
+    right: 8px;
+  }
+
+  .pestanas-movil {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: $pestanas;
+    z-index: 20;
+    border-top: 1px solid #dee2e6;
+    background: white;
+    padding-bottom: env(safe-area-inset-bottom);
+
+    .btn {
+      flex: 1;
+      border-radius: 0;
+      font-size: 1.1rem;
+    }
+  }
+
+  // El botón de pantalla completa no hace falta: en modo código el editor ya ocupa toda la pantalla
+  .full-ide-button {
+    display: none;
+  }
+
+  .editor-buttons {
+    left: 0;
+    right: 0;
+    top: $barra-superior;
+    padding: 6px 12px;
+    background: white;
+    border-bottom: 1px solid #dee2e6;
+    z-index: 4;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    min-height: $botones-editor;
+
+    .btn {
+      padding: 0.3rem 0.6rem;
+    }
+  }
+
+  .ide {
+    left: 0 !important;
+    right: 0;
+    top: calc(#{$barra-superior} + #{$botones-editor});
+    bottom: $pestanas;
+    margin: 0 4px 4px;
+
+    &.ide-half, &.ide-full {
+      .editor {
+        left: 0;
+        right: 0;
+        width: auto;
+        height: 54%;
+        top: 0;
+        bottom: auto;
+      }
+
+      .terminal {
+        left: 0;
+        right: 0;
+        width: auto;
+        height: 45%;
+      }
+    }
+  }
+
+  .output-prediction .submit-prediction {
+    width: calc(100vw - 24px);
+    left: 12px;
+    bottom: calc(#{$pestanas} + 8px);
+  }
+
+  .hint-icon {
+    bottom: calc(#{$pestanas} + 10px);
+  }
+
+  // Vista "Lección": se oculta el editor (pero sigue funcionando en segundo plano)
+  .vista-movil-leccion {
+    .ide, .editor-buttons {
+      visibility: hidden;
+      pointer-events: none;
+    }
+  }
+
+  // Vista "Código": se oculta el texto de la lección
+  .vista-movil-codigo {
+    .book-text {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .navbar .texto-toc, .boton-mi-avance .nombre-alumno {
+    display: none;
+  }
+}

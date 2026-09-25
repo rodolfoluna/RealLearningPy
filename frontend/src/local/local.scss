@@ -1,0 +1,192 @@
+// Estilos de las pantallas propias de RealLearningPy (acceso, mi avance, panel del profesor)
+
+.pantalla-acceso {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: linear-gradient(135deg, #343a40 0%, #1f5fa8 100%);
+
+  .tarjeta-acceso {
+    width: 100%;
+    max-width: 520px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .titulo-app {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1f5fa8;
+    margin-bottom: 0.75rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.opciones-acceso {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 1.5rem;
+
+  .btn {
+    white-space: normal;
+  }
+}
+
+.botones-formulario, .enlaces-secundarios, .acciones-tabla {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.enlaces-secundarios {
+  justify-content: space-between;
+}
+
+.acciones-tabla {
+  margin: 1rem 0 0.5rem;
+
+  > span {
+    margin-right: auto;
+    font-weight: bold;
+  }
+}
+
+// Ventanas modales (reactjs-popup con className="rlpy")
+.rlpy-overlay {
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1000 !important;
+}
+
+.rlpy-content {
+  width: 720px;
+  max-width: 95vw;
+  max-height: 92vh;
+  overflow: auto;
+  border-radius: 6px;
+}
+
+.modal-local {
+  background: white;
+  padding: 1.25rem;
+  border-radius: 6px;
+  position: relative;
+
+  .close {
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+    font-size: 2rem;
+  }
+
+  h3 {
+    padding-right: 2rem;
+  }
+}
+
+.barra-avance {
+  height: 1.4rem;
+  font-size: 0.85rem;
+  background: #e9ecef;
+
+  .progress-bar {
+    min-width: 2.5em;
+    color: white;
+  }
+}
+
+.lista-lecciones {
+  padding-left: 1.25rem;
+  margin-bottom: 0.25rem;
+
+  li.completada a {
+    color: #1e7e34;
+  }
+}
+
+.boton-mi-avance {
+  white-space: nowrap;
+  max-width: 45vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.panel-profesor {
+  min-height: 100vh;
+  background: #f4f6f8;
+
+  .navbar-brand {
+    white-space: normal;
+  }
+
+  .contenido-panel {
+    padding-top: 1.5rem;
+    padding-bottom: 3rem;
+  }
+
+  .seccion-panel {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+
+    h2 {
+      font-size: 1.35rem;
+    }
+
+    summary {
+      cursor: pointer;
+    }
+  }
+
+  .zona-archivos {
+    border: 2px dashed #adb5bd;
+    border-radius: 6px;
+    padding: 1rem;
+    text-align: center;
+
+    &.arrastrando {
+      border-color: #1f5fa8;
+      background: #e8f0fb;
+    }
+
+    input {
+      display: inline-block;
+      width: auto;
+      max-width: 100%;
+    }
+  }
+
+  .tabla-alumnos td {
+    vertical-align: middle;
+  }
+
+  .clave-publica {
+    background: #343a40;
+    color: #f8f9fa;
+    padding: 0.75rem;
+    border-radius: 4px;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+}
+
+.codigo-alumno {
+  background: #272822;
+  color: #f8f8f2;
+  padding: 0.75rem;
+  border-radius: 4px;
+  max-height: 20em;
+  overflow: auto;
+}
+
+.tabla-lecciones {
+  font-size: 0.9rem;
+}

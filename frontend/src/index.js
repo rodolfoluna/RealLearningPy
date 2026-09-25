@@ -5,6 +5,7 @@ import {App} from './App';
 import {Provider} from "react-redux";
 import {store} from "./store";
 import {ErrorBoundary} from "./Feedback";
+import {Acceso} from "./local/Acceso";
 
 
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
@@ -13,7 +14,9 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 ReactDOM.render(
   <Provider store={store}>
     <ErrorBoundary>
-      <App/>
+      <Acceso>
+        <App/>
+      </Acceso>
     </ErrorBoundary>
   </Provider>,
   document.getElementById("root")
