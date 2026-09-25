@@ -16,6 +16,7 @@ import React from "react";
 import * as Sentry from "@sentry/react";
 import {wrapAsync} from "./frontendlib/sentry";
 import {runCodeTask, taskClient} from "./TaskClient";
+import {registrarPasoSuperado} from "./local/evidencias";
 
 export const terminalRef = React.createRef();
 
@@ -153,13 +154,17 @@ export const _runCode = wrapAsync(async function runCode({code, source}) {
             })
       )
     ).then(() => {
-      const url = "/course/birdseye/?call_id=" + call_id;
+      const url = "birdseye/?call_id=" + call_id;
       if (bookState.prediction.state === "hidden") {
         window.open(url);
       } else {
         bookSetState("prediction.codeResult.birdseyeUrl", url);
       }
     });
+  }
+
+  if (data.passed && route !== "question") {
+    registrarPasoSuperado({slug: entry.page_slug, paso: entry.step_name, codigo: entry.input});
   }
 
   ranCode(data);

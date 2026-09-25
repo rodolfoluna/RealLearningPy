@@ -120,9 +120,16 @@ La carpeta `dist/` se puede copiar a otra computadora y servir con `python scrip
   (`alumno` o `profesor`), y cada compilación sólo incluye el código de su app.
 - La traducción al español de la lección *Crear pares clave-valor*, que faltaba en futurecoder, está en
   `translations/extra/` y se aplica con `python -m translations.extra.apply_extra_es`.
-- Limitaciones conocidas: al no haber servidor, un alumno con conocimientos técnicos podría inspeccionar o
-  alterar los datos guardados en su propio navegador. El cifrado protege los archivos frente a otros alumnos,
-  pero no es un sistema antitrampas.
+- **Protección contra modificaciones del archivo de avance:**
+  - Todo el archivo está **sellado** (cifrado autenticado con la cabecera incluida): si se cambia cualquier
+    carácter fuera de la app (con un editor de texto, por ejemplo), el archivo ya no se abre y la app del profesor
+    lo reporta como *modificado fuera de la aplicación o dañado*.
+  - La app guarda el **código con el que el alumno superó cada paso** y su fecha. El profesor lo ve en *Ver detalle*.
+  - La app del profesor revisa la coherencia de cada archivo (pasos sin código registrado, fechas imposibles,
+    resumen que no cuadra) y muestra **✔ Íntegro** o **⚠ Revisar** en la columna *Verificación* y en el CSV.
+  - Límite honesto: sin un servidor, ninguna app puede impedir al 100 % que un alumno con conocimientos avanzados de
+    programación use su propia contraseña para fabricar un archivo con un programa. Estas medidas hacen que tendría
+    que escribir soluciones reales para cada paso con fechas coherentes, y el profesor puede revisar ese código.
 
 ## Créditos y licencia
 

@@ -29,6 +29,7 @@ import {
   NOMBRE_APP,
   nombreArchivo,
 } from "./comun";
+import {bloqueoGuardado, borrarEvidencias, cargarEvidencias, guardarEvidencias} from "./evidencias";
 
 export {descargarBlob, EXTENSION, huellaProfesor, leerArchivoJson, NOMBRE_APP, nombreArchivo};
 
@@ -39,9 +40,7 @@ const sesion = {
   claveAlumno: null,
 };
 
-// Mientras se reemplazan los datos locales (importar archivo, cambiar de alumno)
-// no se debe volver a guardar el estado actual del curso.
-export const bloqueoGuardado = {activo: false};
+export {bloqueoGuardado};
 
 export async function cargarPerfil() {
   return await almacen.getItem("perfil");
@@ -101,6 +100,7 @@ async function reiniciarDatosLocales() {
   await localStore.removeItem("user");
   await almacen.removeItem("actividad");
   await almacen.removeItem("estado");
+  await borrarEvidencias();
 }
 
 function recargar(pagina = "") {
@@ -224,6 +224,7 @@ export async function crearArchivoDelAlumno() {
   }
   const perfil = await cargarPerfil();
   const actividad = await cargarActividad();
+  const evidencias = await cargarEvidencias();
   const {pagesProgress, pageSlug} = bookState.user;
   const datos = {
     alumno: {numeroControl: perfil.numeroControl, nombre: perfil.nombre},
@@ -236,6 +237,7 @@ export async function crearArchivoDelAlumno() {
       editorContent: bookState.editorContent,
     },
     actividad,
+    evidencias,
     resumen: resumenActual(actividad),
   };
   const archivo = crearArchivoAvance(datos, sesion.claveAlumno, perfil.kdf, clavePublicaProfesor);
@@ -273,7 +275,7 @@ export async function compartirAvance() {
 /** Abre un archivo de avance con la contraseña del alumno y lo carga en este dispositivo. */
 export async function cargarArchivoDelAlumno(archivo, contrasena) {
   const {datos, claveAlumno, kdf} = await abrirComoAlumno(archivo, contrasena);
-  const {alumno, progreso, actividad} = datos;
+  const {alumno, progreso, actividad, evidencias} = datos;
   bloqueoGuardado.activo = true;
   await localStore.setItem("user", {
     uid: "__futurecoder_offline__",
@@ -283,6 +285,7 @@ export async function cargarArchivoDelAlumno(archivo, contrasena) {
     editorContent: progreso.editorContent || "",
   });
   await almacen.setItem("actividad", actividad || {});
+  await guardarEvidencias(evidencias);
   await almacen.setItem("estado", {ultimaExportacion: datos.exportado, ultimoCambio: datos.exportado});
   await almacen.setItem("perfil", {
     numeroControl: alumno.numeroControl,

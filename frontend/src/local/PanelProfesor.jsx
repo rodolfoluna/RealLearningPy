@@ -169,12 +169,67 @@ function AbrirConFrase({alAbrir}) {
 
 // ---------- Archivos de alumnos ----------
 
+const MARGEN = 5 * 60 * 1000;  // tolerancia para pequeñas diferencias de reloj
+
+/**
+ * Revisa que el contenido del archivo sea coherente. El sello criptográfico ya garantiza que el archivo
+ * no se editó; estas revisiones ayudan a detectar un archivo fabricado fuera de la app con un programa.
+ */
+function revisarArchivo({datos, version}) {
+  const observaciones = [];
+  const {resumen, evidencias, actividad = {}, exportado, perfilCreado} = datos;
+  const fechaExportado = Date.parse(exportado);
+  const posterior = (iso) => Date.parse(iso) > fechaExportado + MARGEN;
+
+  if (version < 2) {
+    observaciones.push("Formato antiguo: la cabecera del archivo no está sellada. Pide al alumno que lo vuelva a descargar.");
+  }
+  if (!(fechaExportado <= Date.now() + MARGEN)) {
+    observaciones.push("La fecha de exportación está en el futuro (reloj del dispositivo incorrecto o archivo manipulado).");
+  }
+  if (_.sumBy(resumen.porLeccion, "pasosCompletados") !== resumen.pasosCompletados) {
+    observaciones.push("El resumen del avance no coincide con el detalle por lección.");
+  }
+  if (Object.values(actividad).some(a => a.completada && posterior(a.completada))) {
+    observaciones.push("Hay lecciones completadas con fecha posterior a la exportación del archivo.");
+  }
+  if (!evidencias) {
+    observaciones.push("El archivo no incluye el código de los pasos superados (fue creado con una versión anterior de la app).");
+  } else {
+    const porLeccion = _.countBy(Object.keys(evidencias), clave => clave.split("/")[0]);
+    const sinCodigo = _.sumBy(resumen.porLeccion, l => Math.max(0, l.pasosCompletados - (porLeccion[l.slug] || 0)));
+    if (sinCodigo > 0) {
+      observaciones.push(`${sinCodigo} paso(s) completado(s) sin registro del código con que se superaron.`);
+    }
+    const fechas = Object.values(evidencias).map(e => e.fecha);
+    if (fechas.some(posterior)) {
+      observaciones.push("Hay pasos superados con fecha posterior a la exportación del archivo.");
+    }
+    if (perfilCreado && fechas.some(f => Date.parse(f) < Date.parse(perfilCreado) - MARGEN)) {
+      observaciones.push("Hay pasos superados con fecha anterior al registro del alumno.");
+    }
+  }
+  return observaciones;
+}
+
+function Verificacion({observaciones}) {
+  if (!observaciones.length) {
+    return <span className="text-success" title="Archivo sellado por la app, sin modificaciones y con contenido coherente">
+      ✔ Íntegro
+    </span>;
+  }
+  return <span className="text-warning font-weight-bold" title={observaciones.join("\n")}>
+    ⚠ Revisar ({observaciones.length})
+  </span>;
+}
+
 async function abrirArchivos(files, clave) {
   return await Promise.all(Array.from(files).map(async (file) => {
     try {
       const contenido = await leerArchivoJson(file);
       const datos = abrirComoProfesor(contenido, clave.privada);
-      return {id: _.uniqueId("archivo"), nombreArchivo: file.name, datos};
+      const archivo = {id: _.uniqueId("archivo"), nombreArchivo: file.name, datos, version: contenido.version};
+      return {...archivo, observaciones: revisarArchivo(archivo)};
     } catch (e) {
       return {id: _.uniqueId("archivo"), nombreArchivo: file.name, error: e.message || String(e)};
     }
@@ -202,15 +257,16 @@ function descargarCsv(alumnos) {
   const lecciones = alumnos[0]?.datos.resumen.porLeccion || [];
   const encabezados = [
     "Número de control", "Nombre", "Avance (%)", "Lecciones completadas", "Lecciones totales",
-    "Pasos completados", "Pasos totales", "Lección actual", "Archivo exportado el",
+    "Pasos completados", "Pasos totales", "Lección actual", "Archivo exportado el", "Verificación",
     ...lecciones.map(l => `${l.capitulo} / ${l.titulo}`),
   ];
-  const filas = alumnos.map(({datos: {alumno, resumen, progreso, exportado}}) => {
+  const filas = alumnos.map(({datos: {alumno, resumen, progreso, exportado}, observaciones}) => {
     const porSlug = _.keyBy(resumen.porLeccion, "slug");
     return [
       alumno.numeroControl, alumno.nombre, resumen.porcentaje, resumen.leccionesCompletadas,
       resumen.leccionesTotales, resumen.pasosCompletados, resumen.pasosTotales, progreso.paginaActual,
       formatoFecha(exportado),
+      observaciones.length ? `Revisar: ${observaciones.join(" | ")}` : "Íntegro",
       ...lecciones.map(l => {
         const leccion = porSlug[l.slug];
         if (!leccion) {
@@ -229,8 +285,28 @@ function descargarCsv(alumnos) {
   descargarBlob(new Blob([csv], {type: "text/csv;charset=utf-8"}), `reporte_avance_${fecha}.csv`);
 }
 
-function DetalleAlumno({datos, cerrar}) {
-  const {alumno, resumen, progreso, exportado} = datos;
+function CodigoDeLeccion({evidencias, slug}) {
+  const pasos = _.sortBy(
+    Object.entries(evidencias || {}).filter(([clave]) => clave.split("/")[0] === slug),
+    ([, e]) => e.fecha,
+  );
+  if (!pasos.length) {
+    return null;
+  }
+  return <details>
+    <summary className="small">Ver código ({pasos.length})</summary>
+    {pasos.map(([clave, e]) =>
+      <div key={clave} className="mt-1">
+        <div className="small text-muted">{clave.split("/")[1]} · {formatoFecha(e.fecha)}</div>
+        <pre className="codigo-alumno mb-1">{e.codigo}</pre>
+      </div>
+    )}
+  </details>;
+}
+
+function DetalleAlumno({archivo, cerrar}) {
+  const {datos, observaciones} = archivo;
+  const {alumno, resumen, progreso, exportado, evidencias} = datos;
   const capitulos = _.groupBy(resumen.porLeccion, "capitulo");
   return <div className="modal-local">
     <button className="close" onClick={cerrar} aria-label="Cerrar">&times;</button>
@@ -240,6 +316,15 @@ function DetalleAlumno({datos, cerrar}) {
       Archivo exportado el: <b>{formatoFecha(exportado)}</b><br/>
       Lección actual: <b>{progreso.paginaActual || "—"}</b>
     </p>
+    {observaciones.length ?
+      <div className="alert alert-warning">
+        <b>Revisa este archivo:</b>
+        <ul className="mb-0">{observaciones.map(o => <li key={o}>{o}</li>)}</ul>
+      </div> :
+      <div className="alert alert-success py-2">
+        ✔ Archivo sellado por la app, sin modificaciones y con contenido coherente.
+      </div>
+    }
     <Barra porcentaje={resumen.porcentaje}/>
     <p className="mt-2">
       {resumen.leccionesCompletadas} de {resumen.leccionesTotales} lecciones completadas
@@ -256,7 +341,7 @@ function DetalleAlumno({datos, cerrar}) {
             <tbody>
             {lecciones.map(l =>
               <tr key={l.slug} className={l.completada ? "table-success" : l.pasosCompletados ? "table-warning" : ""}>
-                <td>{l.titulo}</td>
+                <td>{l.titulo}<CodigoDeLeccion evidencias={evidencias} slug={l.slug}/></td>
                 <td>{l.soloLectura ? "Lectura" : `${l.pasosCompletados}/${l.pasosTotales}`}</td>
                 <td>{formatoFecha(l.completadaEl)}</td>
                 <td>{formatoFecha(l.ultimaActividad)}</td>
@@ -373,7 +458,7 @@ function ArchivosAlumnos({clave}) {
 
     {errores.length > 0 &&
       <div className="alert alert-danger mt-3">
-        <b>No se pudieron abrir {errores.length} archivo(s):</b>
+        <b>No se pudieron abrir {errores.length} archivo(s) (dañados, modificados fuera de la app o de otra llave):</b>
         <ul className="mb-0">
           {errores.map(a => <li key={a.id}><code>{a.nombreArchivo}</code>: {a.error}</li>)}
         </ul>
@@ -400,6 +485,7 @@ function ArchivosAlumnos({clave}) {
             <th>Lecciones</th>
             <th>Lección actual</th>
             <th>Exportado</th>
+            <th>Verificación</th>
             <th/>
           </tr>
           </thead>
@@ -416,6 +502,7 @@ function ArchivosAlumnos({clave}) {
                 {formatoFecha(exportado)}
                 {a.cantidad > 1 && <div className="text-muted small">({a.cantidad} archivos; se muestra el más reciente)</div>}
               </td>
+              <td><Verificacion observaciones={a.observaciones}/></td>
               <td className="text-nowrap">
                 <button className="btn btn-primary btn-sm" onClick={() => setDetalle(a)}>Ver detalle</button>{" "}
                 <button className="btn btn-outline-secondary btn-sm" onClick={() => setRestablecer(a)}>
@@ -430,7 +517,7 @@ function ArchivosAlumnos({clave}) {
     </>}
 
     <Popup open={!!detalle} onClose={() => setDetalle(null)} modal nested className="rlpy">
-      {detalle && <DetalleAlumno datos={detalle.datos} cerrar={() => setDetalle(null)}/>}
+      {detalle && <DetalleAlumno archivo={detalle} cerrar={() => setDetalle(null)}/>}
     </Popup>
     <Popup open={!!restablecer} onClose={() => setRestablecer(null)} modal nested className="rlpy">
       {restablecer && <RestablecerContrasena archivo={restablecer} clave={clave} cerrar={() => setRestablecer(null)}/>}

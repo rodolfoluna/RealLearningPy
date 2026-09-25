@@ -27,6 +27,13 @@ export const FORMATO_AVANCE = "reallearningpy-avance";
 const PARAMETROS_SCRYPT = {N: 2 ** 15, r: 8, p: 1};
 const INFO_PROFESOR = utf8ToBytes("reallearningpy-profesor-v1");
 
+export class ArchivoAlterado extends Error {
+  constructor() {
+    super("El archivo fue modificado fuera de la aplicación o está dañado. No se puede confiar en su contenido.");
+    this.name = "ArchivoAlterado";
+  }
+}
+
 export class ContrasenaIncorrecta extends Error {
   constructor(message = "La contraseña es incorrecta o el archivo está dañado.") {
     super(message);
@@ -89,17 +96,18 @@ export function verificador(clave) {
   return aBase64(sha256(concatBytes(utf8ToBytes("reallearningpy-verificador"), clave)));
 }
 
-function cifrar(clave, bytes) {
+// "aad" son datos adicionales que no se cifran pero quedan sellados: si cambian, el descifrado falla
+function cifrar(clave, bytes, aad) {
   const nonce = randomBytes(24);
-  const datos = xchacha20poly1305(clave, nonce).encrypt(bytes);
+  const datos = xchacha20poly1305(clave, nonce, aad).encrypt(bytes);
   return {nonce: aBase64(nonce), datos: aBase64(datos)};
 }
 
-function descifrar(clave, {nonce, datos}) {
+function descifrar(clave, {nonce, datos}, aad, ErrorAlFallar = ContrasenaIncorrecta) {
   try {
-    return xchacha20poly1305(clave, deBase64(nonce)).decrypt(deBase64(datos));
+    return xchacha20poly1305(clave, deBase64(nonce), aad).decrypt(deBase64(datos));
   } catch (e) {
-    throw new ContrasenaIncorrecta();
+    throw new ErrorAlFallar();
   }
 }
 
@@ -129,6 +137,18 @@ function desenvolverProfesor(sobre, clavePrivadaProfesor) {
 
 // ---------- Archivos de avance ----------
 
+// Versión 2: además del contenido, se sella la cabecera del archivo (fecha, parámetros y
+// datos del profesor), de modo que cualquier cambio en cualquier parte del archivo se detecta.
+const VERSION_AVANCE = 2;
+
+function cabeceraSellada(archivo) {
+  const {formato, version, creado, kdf, profesor} = archivo;
+  return codificador.encode(JSON.stringify([
+    formato, version, creado, kdf.alg, kdf.N, kdf.r, kdf.p, kdf.sal,
+    profesor ? profesor.huella : null, profesor ? profesor.efimera : null,
+  ]));
+}
+
 /**
  * Crea el contenido (objeto JSON) de un archivo de avance.
  * @param datos objeto con la información del alumno y su progreso
@@ -140,27 +160,34 @@ export function crearArchivoAvance(datos, claveAlumno, kdf, clavePublicaProfesor
   const claveDatos = randomBytes(32);
   const archivo = {
     formato: FORMATO_AVANCE,
-    version: 1,
+    version: VERSION_AVANCE,
     creado: new Date().toISOString(),
     kdf,
-    datos: cifrar(claveDatos, codificador.encode(JSON.stringify(datos))),
-    alumno: cifrar(claveAlumno, claveDatos),
     profesor: clavePublicaProfesor ? envolverParaProfesor(claveDatos, clavePublicaProfesor) : null,
+    alumno: cifrar(claveAlumno, claveDatos),
   };
+  archivo.datos = cifrar(claveDatos, codificador.encode(JSON.stringify(datos)), cabeceraSellada(archivo));
   return archivo;
 }
 
 export function validarArchivoAvance(archivo) {
-  if (!archivo || archivo.formato !== FORMATO_AVANCE || !archivo.datos || !archivo.alumno) {
-    throw new Error("Este archivo no es un archivo de avance de RealLearningPy.");
+  if (!archivo || archivo.formato !== FORMATO_AVANCE || !archivo.datos || !archivo.alumno || !archivo.kdf) {
+    throw new Error("Este archivo no es un archivo de avance de RealLearningPy, o fue modificado.");
   }
-  if (archivo.version > 1) {
+  if (archivo.version > VERSION_AVANCE) {
     throw new Error("Este archivo fue creado con una versión más nueva de la aplicación. Actualiza la aplicación.");
   }
 }
 
 function descifrarDatos(archivo, claveDatos) {
-  return JSON.parse(decodificador.decode(descifrar(claveDatos, archivo.datos)));
+  // Los archivos de la versión 1 no sellaban la cabecera
+  const aad = archivo.version >= 2 ? cabeceraSellada(archivo) : undefined;
+  const bytes = descifrar(claveDatos, archivo.datos, aad, ArchivoAlterado);
+  try {
+    return JSON.parse(decodificador.decode(bytes));
+  } catch (e) {
+    throw new ArchivoAlterado();
+  }
 }
 
 /** Abre un archivo de avance con la contraseña del alumno. */
@@ -186,7 +213,12 @@ export function abrirComoProfesor(archivo, clavePrivadaProfesor) {
       `Este archivo se creó para otra clave de profesor (huella ${archivo.profesor.huella}).`
     );
   }
-  const claveDatos = desenvolverProfesor(archivo.profesor, clavePrivadaProfesor);
+  let claveDatos;
+  try {
+    claveDatos = desenvolverProfesor(archivo.profesor, clavePrivadaProfesor);
+  } catch (e) {
+    throw new ArchivoAlterado();
+  }
   return descifrarDatos(archivo, claveDatos);
 }
 
