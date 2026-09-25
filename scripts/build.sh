@@ -7,6 +7,9 @@
 set -eux
 
 export FUTURECODER_LANGUAGE=${FUTURECODER_LANGUAGE:-es}
+# Regenerar la lista de librerías de Python que se empaquetan según el entorno actual
+# (evita fallos por archivos propios del entorno virtual, como _virtualenv.py)
+export FIX_CORE_IMPORTS=1
 
 rm -rf dist || true
 mkdir -p dist
